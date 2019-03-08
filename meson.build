@@ -1,4 +1,4 @@
-project('com.github.DreamTeam.Pomodoro', 'vala', 'c')
+project('com.github.DreamTeam999.Pomodoro', 'vala', 'c')
 
 subdir('src')
 subdir('data')

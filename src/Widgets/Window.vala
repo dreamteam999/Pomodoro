@@ -13,7 +13,7 @@ public class Pomo.Window : Gtk.ApplicationWindow {
         window_position = Gtk.WindowPosition.CENTER;
         set_default_size(640, 480);
 
-        settings = new GLib.Settings("com.github.DreamTeam.Pomodoro");
+        settings = new GLib.Settings("com.github.DreamTeam999.Pomodoro");
 
         move(settings.get_int("position-x"), settings.get_int("position-y"));
         resize(settings.get_int("window-width"), settings.get_int("window-height"));

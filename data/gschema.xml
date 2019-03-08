@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
-    <schema path="/com/github/DreamTeam/Pomodoro/" id="com.github.DreamTeam.Pomodoro">
+    <schema path="/com/github/DreamTeam999/Pomodoro/" id="com.github.DreamTeam999.Pomodoro">
         <key name="position-x" type="i">
             <default>360</default>
             <summary>Horizontal Position</summary>
