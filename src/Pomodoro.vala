@@ -1,7 +1,7 @@
 public class Pomodoro : Gtk.Application {
 
     public Pomodoro() {
-        Object(application_id: "com.github.DreamTeam.Pomodoro", flags: ApplicationFlags.FLAGS_NONE);
+        Object(application_id: "com.github.DreamTeam999.Pomodoro", flags: ApplicationFlags.FLAGS_NONE);
     }
 
     protected override void activate() {
