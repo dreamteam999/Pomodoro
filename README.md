@@ -1,12 +1,8 @@
 # Pomodoro
-<<<<<<< HEAD
-
-A simple Pomodoro timer designed with eOS and Pantheon in mind.
-=======
-A simple Pomodoro timer designed with eOS and Pantheon in mind.
 
 Current ready-status is: dry noodles.
->>>>>>> refs/remotes/origin/master
+
+A simple Pomodoro timer designed with eOS and Pantheon in mind.
 
 ### Etc
 
