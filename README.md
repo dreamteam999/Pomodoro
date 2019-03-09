@@ -4,6 +4,15 @@ Current ready-status is: dry noodles.
 
 A simple Pomodoro timer designed with eOS and Pantheon in mind.
 
+### The Pomodoro Technique
+
+ 1. Decide on the task to be done.
+ 2. Set the pomodoro timer to `n` minutes (traditionally n = 25). This is the length of one pomodoro, or `pom`.
+ 3. Work on the task until the timer rings. If a distraction pops into your head, write it down for later, but then *immediately* get back on task.
+ 4. When the timer at the `n` minute mark rings, amrk that you have completed one `pom`.
+ 5. If you have fewer than four `poms`, take a short break (3–5 minutes), start a new `pom`.
+ 6. After four pomodoros, take a long break (15–30 minutes). It’s a good idea to get away maybe go on a walk during long breaks. Reset the `pom` counter and start over.
+
 ### Etc
 
 * [Glib Basic Types](https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar)
