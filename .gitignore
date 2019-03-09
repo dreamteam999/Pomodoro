@@ -1,3 +1,4 @@
 *~
 build/
 /src/*.vala~
+/src/Widgets/*.vala~
