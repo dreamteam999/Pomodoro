@@ -23,4 +23,4 @@ A simple Pomodoro timer designed with eOS and Pantheon in mind.
 * [labelsettext()](https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-set-text)
 * [Signals and Callbacks Ref](https://developer.gnome.org/gtk-tutorial/stable/x159.html)
 * [ELEMENTARY OS: Developer Guide (Getting Started)](https://elementary.io/docs/code/getting-started#getting-started)
-
+* [Setting background colors in GTK+ 3.0+ (Example)](https://mail.gnome.org/archives/gtk-app-devel-list/2016-August/msg00021.html)
