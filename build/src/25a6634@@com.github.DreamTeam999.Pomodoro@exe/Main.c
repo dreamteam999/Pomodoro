@@ -38,15 +38,15 @@ _vala_main (gchar** args,
 	gint result = 0;
 	Pomodoro* pomo = NULL;
 	Pomodoro* _tmp0_;
-#line 2 "../src/Main.vala"
+#line 4 "../src/Main.vala"
 	_tmp0_ = pomodoro_new ();
-#line 2 "../src/Main.vala"
+#line 4 "../src/Main.vala"
 	pomo = _tmp0_;
-#line 4 "../src/Main.vala"
+#line 6 "../src/Main.vala"
 	result = g_application_run ((GApplication*) pomo, args_length1, args);
-#line 4 "../src/Main.vala"
+#line 6 "../src/Main.vala"
 	_g_object_unref0 (pomo);
-#line 4 "../src/Main.vala"
+#line 6 "../src/Main.vala"
 	return result;
 #line 52 "Main.c"
 }

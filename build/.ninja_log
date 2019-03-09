@@ -1,11 +1,11 @@
 # ninja log v5
-0	303	1552068742	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/Main.c	b819a90fbf64e8ab
-0	303	1552068742	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/Pomodoro.c	b819a90fbf64e8ab
-0	303	1552068742	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/Widgets/Window.c	b819a90fbf64e8ab
-0	303	1552068742	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/Widgets/HeaderBar.c	b819a90fbf64e8ab
-303	668	1552068743	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/meson-generated_Main.c.o	f78f4496e04ccc74
-303	674	1552068743	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/meson-generated_Pomodoro.c.o	37b53f879f047d6f
-303	679	1552068743	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/meson-generated_Widgets_HeaderBar.c.o	60e6819153d4f747
-303	681	1552068743	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/meson-generated_Widgets_Window.c.o	600c68f6d69a574c
-681	788	1552068743	src/com.github.DreamTeam999.Pomodoro	c1a8e9870e1ef284
-0	385	0	reconfigure	959dcf71d2d3d4b3
+1	366	1552093726	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/Main.c	b819a90fbf64e8ab
+1	366	1552093726	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/Pomodoro.c	b819a90fbf64e8ab
+1	366	1552093726	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/Widgets/Window.c	b819a90fbf64e8ab
+1	366	1552093726	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/Widgets/HeaderBar.c	b819a90fbf64e8ab
+367	762	1552093727	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/meson-generated_Pomodoro.c.o	37b53f879f047d6f
+367	795	1552093727	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/meson-generated_Main.c.o	f78f4496e04ccc74
+367	803	1552093727	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/meson-generated_Widgets_HeaderBar.c.o	60e6819153d4f747
+367	815	1552093727	src/25a6634@@com.github.DreamTeam999.Pomodoro@exe/meson-generated_Widgets_Window.c.o	600c68f6d69a574c
+816	933	1552093727	src/com.github.DreamTeam999.Pomodoro	c1a8e9870e1ef284
+11	8989	0	meson-install	9bd7faa9472bf40f

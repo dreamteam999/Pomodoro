@@ -92,43 +92,43 @@ pomo_header_bar_constructor (GType type,
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, POMO_TYPE_HEADER_BAR, PomoHeaderBar);
 #line 4 "../src/Widgets/HeaderBar.vala"
 	gtk_header_bar_set_title ((GtkHeaderBar*) self, "DreamTeam Pomodoro");
-#line 6 "../src/Widgets/HeaderBar.vala"
+#line 7 "../src/Widgets/HeaderBar.vala"
 	gtk_header_bar_set_subtitle ((GtkHeaderBar*) self, "Filler text!");
-#line 8 "../src/Widgets/HeaderBar.vala"
+#line 11 "../src/Widgets/HeaderBar.vala"
 	gtk_header_bar_set_show_close_button ((GtkHeaderBar*) self, TRUE);
-#line 9 "../src/Widgets/HeaderBar.vala"
+#line 15 "../src/Widgets/HeaderBar.vala"
 	_tmp0_ = (GtkButton*) gtk_button_new_with_label ("Click me (0)");
-#line 9 "../src/Widgets/HeaderBar.vala"
+#line 15 "../src/Widgets/HeaderBar.vala"
 	g_object_ref_sink (_tmp0_);
-#line 9 "../src/Widgets/HeaderBar.vala"
+#line 15 "../src/Widgets/HeaderBar.vala"
 	miscbutton = _tmp0_;
-#line 10 "../src/Widgets/HeaderBar.vala"
+#line 16 "../src/Widgets/HeaderBar.vala"
 	_tmp1_ = miscbutton;
-#line 10 "../src/Widgets/HeaderBar.vala"
+#line 16 "../src/Widgets/HeaderBar.vala"
 	_tmp2_ = gtk_widget_get_style_context ((GtkWidget*) _tmp1_);
-#line 10 "../src/Widgets/HeaderBar.vala"
+#line 16 "../src/Widgets/HeaderBar.vala"
 	gtk_style_context_add_class (_tmp2_, "suggested-action");
-#line 11 "../src/Widgets/HeaderBar.vala"
+#line 17 "../src/Widgets/HeaderBar.vala"
 	_tmp3_ = miscbutton;
-#line 11 "../src/Widgets/HeaderBar.vala"
+#line 17 "../src/Widgets/HeaderBar.vala"
 	gtk_widget_set_valign ((GtkWidget*) _tmp3_, GTK_ALIGN_CENTER);
-#line 12 "../src/Widgets/HeaderBar.vala"
+#line 18 "../src/Widgets/HeaderBar.vala"
 	_tmp4_ = miscbutton;
-#line 12 "../src/Widgets/HeaderBar.vala"
+#line 18 "../src/Widgets/HeaderBar.vala"
 	gtk_header_bar_pack_start ((GtkHeaderBar*) self, (GtkWidget*) _tmp4_);
-#line 15 "../src/Widgets/HeaderBar.vala"
+#line 21 "../src/Widgets/HeaderBar.vala"
 	_tmp5_ = (GtkButton*) gtk_button_new_from_icon_name ("open-menu", (GtkIconSize) GTK_ICON_SIZE_LARGE_TOOLBAR);
-#line 15 "../src/Widgets/HeaderBar.vala"
+#line 21 "../src/Widgets/HeaderBar.vala"
 	g_object_ref_sink (_tmp5_);
-#line 15 "../src/Widgets/HeaderBar.vala"
+#line 21 "../src/Widgets/HeaderBar.vala"
 	menu_button = _tmp5_;
-#line 16 "../src/Widgets/HeaderBar.vala"
+#line 22 "../src/Widgets/HeaderBar.vala"
 	_tmp6_ = menu_button;
-#line 16 "../src/Widgets/HeaderBar.vala"
+#line 22 "../src/Widgets/HeaderBar.vala"
 	gtk_widget_set_valign ((GtkWidget*) _tmp6_, GTK_ALIGN_CENTER);
-#line 17 "../src/Widgets/HeaderBar.vala"
+#line 23 "../src/Widgets/HeaderBar.vala"
 	_tmp7_ = menu_button;
-#line 17 "../src/Widgets/HeaderBar.vala"
+#line 23 "../src/Widgets/HeaderBar.vala"
 	gtk_header_bar_pack_end ((GtkHeaderBar*) self, (GtkWidget*) _tmp7_);
 #line 2 "../src/Widgets/HeaderBar.vala"
 	_g_object_unref0 (menu_button);

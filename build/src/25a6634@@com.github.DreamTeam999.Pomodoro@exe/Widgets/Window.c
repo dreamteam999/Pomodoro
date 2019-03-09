@@ -120,39 +120,39 @@ pomo_window_before_destroy (PomoWindow* self)
 	GSettings* _tmp5_;
 	GSettings* _tmp6_;
 	GSettings* _tmp7_;
-#line 31 "../src/Widgets/Window.vala"
+#line 42 "../src/Widgets/Window.vala"
 	g_return_val_if_fail (self != NULL, FALSE);
-#line 34 "../src/Widgets/Window.vala"
+#line 45 "../src/Widgets/Window.vala"
 	gtk_window_get_size ((GtkWindow*) self, &_tmp0_, &_tmp1_);
-#line 34 "../src/Widgets/Window.vala"
+#line 45 "../src/Widgets/Window.vala"
 	width = _tmp0_;
-#line 34 "../src/Widgets/Window.vala"
+#line 45 "../src/Widgets/Window.vala"
 	height = _tmp1_;
-#line 35 "../src/Widgets/Window.vala"
+#line 46 "../src/Widgets/Window.vala"
 	gtk_window_get_position ((GtkWindow*) self, &_tmp2_, &_tmp3_);
-#line 35 "../src/Widgets/Window.vala"
+#line 46 "../src/Widgets/Window.vala"
 	x = _tmp2_;
-#line 35 "../src/Widgets/Window.vala"
+#line 46 "../src/Widgets/Window.vala"
 	y = _tmp3_;
-#line 37 "../src/Widgets/Window.vala"
+#line 48 "../src/Widgets/Window.vala"
 	_tmp4_ = self->settings;
-#line 37 "../src/Widgets/Window.vala"
+#line 48 "../src/Widgets/Window.vala"
 	g_settings_set_int (_tmp4_, "position-x", x);
-#line 38 "../src/Widgets/Window.vala"
+#line 49 "../src/Widgets/Window.vala"
 	_tmp5_ = self->settings;
-#line 38 "../src/Widgets/Window.vala"
+#line 49 "../src/Widgets/Window.vala"
 	g_settings_set_int (_tmp5_, "position-y", y);
-#line 39 "../src/Widgets/Window.vala"
+#line 50 "../src/Widgets/Window.vala"
 	_tmp6_ = self->settings;
-#line 39 "../src/Widgets/Window.vala"
+#line 50 "../src/Widgets/Window.vala"
 	g_settings_set_int (_tmp6_, "window-width", width);
-#line 40 "../src/Widgets/Window.vala"
+#line 51 "../src/Widgets/Window.vala"
 	_tmp7_ = self->settings;
-#line 40 "../src/Widgets/Window.vala"
+#line 51 "../src/Widgets/Window.vala"
 	g_settings_set_int (_tmp7_, "window-height", height);
-#line 42 "../src/Widgets/Window.vala"
+#line 53 "../src/Widgets/Window.vala"
 	result = FALSE;
-#line 42 "../src/Widgets/Window.vala"
+#line 53 "../src/Widgets/Window.vala"
 	return result;
 #line 158 "Window.c"
 }
@@ -163,11 +163,11 @@ _pomo_window___lambda4_ (PomoWindow* self,
                          GdkEventAny* e)
 {
 	gboolean result = FALSE;
-#line 21 "../src/Widgets/Window.vala"
+#line 23 "../src/Widgets/Window.vala"
 	g_return_val_if_fail (e != NULL, FALSE);
-#line 22 "../src/Widgets/Window.vala"
+#line 24 "../src/Widgets/Window.vala"
 	result = pomo_window_before_destroy (self);
-#line 22 "../src/Widgets/Window.vala"
+#line 24 "../src/Widgets/Window.vala"
 	return result;
 #line 173 "Window.c"
 }
@@ -180,7 +180,7 @@ __pomo_window___lambda4__gtk_widget_delete_event (GtkWidget* _sender,
 {
 	gboolean result;
 	result = _pomo_window___lambda4_ ((PomoWindow*) self, event);
-#line 21 "../src/Widgets/Window.vala"
+#line 23 "../src/Widgets/Window.vala"
 	return result;
 #line 186 "Window.c"
 }
@@ -208,11 +208,11 @@ pomo_window_constructor (GType type,
 	obj = parent_class->constructor (type, n_construct_properties, construct_properties);
 #line 9 "../src/Widgets/Window.vala"
 	self = G_TYPE_CHECK_INSTANCE_CAST (obj, POMO_TYPE_WINDOW, PomoWindow);
-#line 12 "../src/Widgets/Window.vala"
+#line 11 "../src/Widgets/Window.vala"
 	gtk_container_set_border_width ((GtkContainer*) self, (guint) 10);
-#line 13 "../src/Widgets/Window.vala"
+#line 12 "../src/Widgets/Window.vala"
 	g_object_set ((GtkWindow*) self, "window-position", GTK_WIN_POS_CENTER, NULL);
-#line 14 "../src/Widgets/Window.vala"
+#line 13 "../src/Widgets/Window.vala"
 	gtk_window_set_default_size ((GtkWindow*) self, 640, 480);
 #line 16 "../src/Widgets/Window.vala"
 	_tmp0_ = g_settings_new ("com.github.DreamTeam999.Pomodoro");
@@ -220,31 +220,31 @@ pomo_window_constructor (GType type,
 	_g_object_unref0 (self->settings);
 #line 16 "../src/Widgets/Window.vala"
 	self->settings = _tmp0_;
-#line 18 "../src/Widgets/Window.vala"
+#line 19 "../src/Widgets/Window.vala"
 	_tmp1_ = self->settings;
-#line 18 "../src/Widgets/Window.vala"
+#line 19 "../src/Widgets/Window.vala"
 	_tmp2_ = self->settings;
-#line 18 "../src/Widgets/Window.vala"
+#line 19 "../src/Widgets/Window.vala"
 	gtk_window_move ((GtkWindow*) self, g_settings_get_int (_tmp1_, "position-x"), g_settings_get_int (_tmp2_, "position-y"));
-#line 19 "../src/Widgets/Window.vala"
+#line 20 "../src/Widgets/Window.vala"
 	_tmp3_ = self->settings;
-#line 19 "../src/Widgets/Window.vala"
+#line 20 "../src/Widgets/Window.vala"
 	_tmp4_ = self->settings;
-#line 19 "../src/Widgets/Window.vala"
+#line 20 "../src/Widgets/Window.vala"
 	gtk_window_resize ((GtkWindow*) self, g_settings_get_int (_tmp3_, "window-width"), g_settings_get_int (_tmp4_, "window-height"));
-#line 21 "../src/Widgets/Window.vala"
+#line 23 "../src/Widgets/Window.vala"
 	g_signal_connect_object ((GtkWidget*) self, "delete-event", (GCallback) __pomo_window___lambda4__gtk_widget_delete_event, self, 0);
-#line 25 "../src/Widgets/Window.vala"
-	_tmp5_ = pomo_header_bar_new ();
-#line 25 "../src/Widgets/Window.vala"
-	g_object_ref_sink (_tmp5_);
-#line 25 "../src/Widgets/Window.vala"
-	headerbar = _tmp5_;
-#line 26 "../src/Widgets/Window.vala"
-	_tmp6_ = headerbar;
-#line 26 "../src/Widgets/Window.vala"
-	gtk_window_set_titlebar ((GtkWindow*) self, (GtkWidget*) _tmp6_);
 #line 28 "../src/Widgets/Window.vala"
+	_tmp5_ = pomo_header_bar_new ();
+#line 28 "../src/Widgets/Window.vala"
+	g_object_ref_sink (_tmp5_);
+#line 28 "../src/Widgets/Window.vala"
+	headerbar = _tmp5_;
+#line 29 "../src/Widgets/Window.vala"
+	_tmp6_ = headerbar;
+#line 29 "../src/Widgets/Window.vala"
+	gtk_window_set_titlebar ((GtkWindow*) self, (GtkWidget*) _tmp6_);
+#line 32 "../src/Widgets/Window.vala"
 	gtk_widget_show_all ((GtkWidget*) self);
 #line 9 "../src/Widgets/Window.vala"
 	_g_object_unref0 (headerbar);

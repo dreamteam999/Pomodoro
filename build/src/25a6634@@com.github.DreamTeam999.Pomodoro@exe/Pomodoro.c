@@ -87,13 +87,13 @@ pomodoro_real_activate (GApplication* base)
 	PomoWindow* _tmp0_;
 #line 7 "../src/Pomodoro.vala"
 	self = (Pomodoro*) base;
-#line 8 "../src/Pomodoro.vala"
-	_tmp0_ = pomo_window_new (self);
-#line 8 "../src/Pomodoro.vala"
-	g_object_ref_sink (_tmp0_);
-#line 8 "../src/Pomodoro.vala"
-	window = _tmp0_;
 #line 10 "../src/Pomodoro.vala"
+	_tmp0_ = pomo_window_new (self);
+#line 10 "../src/Pomodoro.vala"
+	g_object_ref_sink (_tmp0_);
+#line 10 "../src/Pomodoro.vala"
+	window = _tmp0_;
+#line 12 "../src/Pomodoro.vala"
 	gtk_application_add_window ((GtkApplication*) self, (GtkWindow*) window);
 #line 7 "../src/Pomodoro.vala"
 	_g_object_unref0 (window);
