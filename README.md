@@ -22,5 +22,5 @@ A simple Pomodoro timer designed with eOS and Pantheon in mind.
 * [GTK Buton With Label](https://developer.gnome.org/gtk3/stable/GtkButton.html#gtk-button-set-label)
 * [labelsettext()](https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-set-text)
 * [Signals and Callbacks Ref](https://developer.gnome.org/gtk-tutorial/stable/x159.html)
-* []()
+* [ELEMENTARY OS: Developer Guide (Getting Started)](https://elementary.io/docs/code/getting-started#getting-started)
 
