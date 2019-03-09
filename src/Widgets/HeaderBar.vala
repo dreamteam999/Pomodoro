@@ -2,10 +2,16 @@ public class Pomo.HeaderBar : Gtk.HeaderBar {
     construct {
         // set title
         set_title("DreamTeam Pomodoro");
+
         // set subtitle
         set_subtitle("Filler text!");
+
         // add button
+        // set_show_close_button allows the default maximaize/restore, and close buttons to show in the headerbar
         set_show_close_button(true);
+
+        // custom label button creation, styled with the suggested-action css style, aligned to
+        // center vertically, and placed at the start of the headerbar (after close of course)
         var miscbutton = new Gtk.Button.with_label("Click me (0)");
         miscbutton.get_style_context().add_class("suggested-action");
         miscbutton.valign = Gtk.Align.CENTER;

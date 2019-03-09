@@ -1,0 +1,31 @@
+Build started at 2019-03-08T13:51:11.892367
+Main binary: /usr/bin/python3
+Python system: Linux
+The Meson build system
+Version: 0.49.2
+Source dir: /home/mikey/Documents/development/vala/Pomodoro
+Build dir: /home/mikey/Documents/development/vala/Pomodoro/build
+Build type: native build
+Project name: com.github.DreamTeam999.Pomodoro
+Project version: undefined
+Native C compiler: cc (gcc 8.3.1 "cc (GCC) 8.3.1 20190223 (Red Hat 8.3.1-2)")
+Native Vala compiler: valac (valac 0.42.5)
+Build machine cpu family: x86_64
+Build machine cpu: x86_64
+Dependency gtk+-3.0 found: YES (cached)
+Program meson/post_install.py found: YES (/home/mikey/Documents/development/vala/Pomodoro/meson/post_install.py)
+Build targets in project: 1
+Found ninja-1.8.2 at /usr/bin/ninja
+Running compile:
+Working directory:  /tmp/tmpx1fqtkgy
+Command line:  cc /tmp/tmpx1fqtkgy/testfile.c -pipe -D_FILE_OFFSET_BITS=64 -c -o /tmp/tmpx1fqtkgy/output.obj -O0 --print-search-dirs 
+
+Code:
+ 
+Compiler stdout:
+ install: /usr/lib/gcc/x86_64-redhat-linux/8/
+programs: =/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/8/:/usr/libexec/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/bin/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/bin/
+libraries: =/usr/lib/gcc/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/lib/x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../x86_64-redhat-linux/8/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../lib64/:/lib/x86_64-redhat-linux/8/:/lib/../lib64/:/usr/lib/x86_64-redhat-linux/8/:/usr/lib/../lib64/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../../x86_64-redhat-linux/lib/:/usr/lib/gcc/x86_64-redhat-linux/8/../../../:/lib/:/usr/lib/
+
+Compiler stderr:
+ 
