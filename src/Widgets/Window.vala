@@ -44,7 +44,7 @@ public class Pomo.Window : Gtk.ApplicationWindow {
 
         get_size(out width, out height);
         get_position(out x, out y);
-
+        //saves the window size before closing
         settings.set_int("position-x", x);
         settings.set_int("position-y", y);
         settings.set_int("window-width", width);
