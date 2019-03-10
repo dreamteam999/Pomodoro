@@ -35,6 +35,15 @@ I suspect we will have to build a `gtk.GridView` containing `gtk.Widget`s which 
  * the number of `pomodoro`s completed
  * the time left in the current `pomodoro`
 
+### What do we want in settings?
+
+[Building the Menu](https://valadoc.org/gtk+-3.0/Gtk.MenuButton.html)
+
+ * Cancel current timer
+ * Trinary widget for Pomodoro size
+ * Trinary widget for short break sizes
+ * Trinary widget for long break sizes (consider tying the long/short break denominations together forcing 25/5:30, 30/10:40. 
+
 ### Etc
 
 * [Glib Basic Types](https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar)
