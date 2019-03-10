@@ -26,13 +26,12 @@ public class Pomodoro : Gtk.Application { //Pomodoro extends Gtk.Application cla
         //window.window_position = Gtk.WindowPosition.CENTER;
 
         add_window(window);
-
     }
+
 }
 
 public static int main(string[] args) {
         // Create new Pomodoro object defined in Pomodoro.vala
         Pomodoro pomo = new Pomodoro();
         return pomo.run(args);
-    }
-
+}

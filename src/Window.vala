@@ -18,7 +18,8 @@ public class Pomo.Window : Gtk.ApplicationWindow {
 
         //connect before_destroy function to window termination for hi-jacking
         delete_event.connect(e => {
-            return before_destroy();
+            return false;
+            //return before_destroy();
         });
 
         //add buttons for headerbar
@@ -73,17 +74,17 @@ public class Pomo.Window : Gtk.ApplicationWindow {
     // so they can be re-loaded when the application is launched again.
     // Only after getting the current information and saving that info to gschema.xml does
     // the function return false and close the program as requested
-        public bool before_destroy() {
-            int width, height, x, y;
-            get_size(out width, out height);
-            get_position(out x, out y);/*
-            //saves the window size before closing
-            settings.set_int("position-x", x);
-            settings.set_int("position-y", y);
-            settings.set_int("window-width", width);
-            settings.set_int("window-height", height);*/
+    public bool before_destroy() {
+        int width, height, x, y;
+        get_size(out width, out height);
+        get_position(out x, out y);
+        //saves the window size before closing
+        Pomodoro.settings.set_int("position-x", x);
+        Pomodoro.settings.set_int("position-y", y);
+        Pomodoro.settings.set_int("window-width", width);
+        Pomodoro.settings.set_int("window-height", height);
 
-            return false;
+        return false;
         }
 }
 
