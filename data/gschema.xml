@@ -23,6 +23,6 @@
             <default>480</default>
             <summary>Window Height</summary>
             <description>The saved height of the window</description>
-        </key>
+		</key>
     </schema>
 </schemalist>

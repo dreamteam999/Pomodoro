@@ -1,5 +1,4 @@
 public class Pomo.Window : Gtk.ApplicationWindow {
-    //public GLib.Settings settings;
     private const string LIGHT_MODE = "display-brightness-symbolic";
     private const string DARK_MODE = "weather-clear-night-symbolic";
     int hbtn_counter = 0;
@@ -9,17 +8,13 @@ public class Pomo.Window : Gtk.ApplicationWindow {
         Object (application: application,
                 height_request: 480,
                 width_request: 800); //eliminate need to set size every start
+
                 // TC: This also has other side effects, such as making the above dimesions the minimum size.
                 // I don't consider this a bad thing, but in case we want the default size to be smaller
                 // in the future, this is a good note to have
     }
     construct {
-        //initialize the object with our application
-        //setup application defaults
-        //set_default_size(640, 480);
         border_width = 10;
-        //pull screen location and window dimensions from gsettings (see data/gschema.xml)
-
         //connect before_destroy function to window termination for hi-jacking
         delete_event.connect(e => {
             //return false;
@@ -29,33 +24,28 @@ public class Pomo.Window : Gtk.ApplicationWindow {
         //add buttons for headerbar
         var miscbutton = new Gtk.Button.with_label("New Timer (0)");
         miscbutton.get_style_context().add_class("suggested-action");
-
         miscbutton.valign = Gtk.Align.CENTER; //center in HB
+
         // add icon button -> submenu/popup
         var menu_button = new Gtk.Button.from_icon_name("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
         menu_button.valign = Gtk.Align.CENTER;
 
-        // TODO: Not Working: add d/m settings switch
+        //light/dark Granite.ModeSwitch
         var gtk_settings = Gtk.Settings.get_default ();
-        var dicon = new Gtk.Image();
-        var licon = new Gtk.Image();
-        dicon.gicon = new ThemedIcon(LIGHT_MODE);
-        licon.gicon = new ThemedIcon(DARK_MODE);
         var mode_switch = new Granite.ModeSwitch.from_icon_name (LIGHT_MODE, DARK_MODE);
         mode_switch.primary_icon_tooltip_text = "Light Mode";
         mode_switch.secondary_icon_tooltip_text = "Dark Mode";
         mode_switch.valign = Gtk.Align.CENTER;
         mode_switch.bind_property ("active", gtk_settings, "gtk_application_prefer_dark_theme");
 
-        //initialize the headerbar, defined in Widgets/HeaderBar.vala
+        //initialize the headerbar
         var headerbar = new Gtk.HeaderBar();
         headerbar.set_title("DreamTeam Pomodoro");
         headerbar.set_subtitle("What will you accomplish today?");
         headerbar.show_close_button = true;
         headerbar.pack_start(miscbutton); //push to  left of HB
         headerbar.pack_end (menu_button); //push to right of HB
-        headerbar.pack_start (mode_switch);
-
+        headerbar.pack_end (mode_switch);
         set_titlebar (headerbar); //activate the headerbar
 
         //button events
@@ -85,7 +75,6 @@ public class Pomo.Window : Gtk.ApplicationWindow {
         int width, height, x, y;
         get_size(out width, out height);
         get_position(out x, out y);
-        //saves the window size before closing
         Pomodoro.settings.set_int("position-x", x);
         Pomodoro.settings.set_int("position-y", y);
         Pomodoro.settings.set_int("window-width", width);
