@@ -19,7 +19,7 @@ public class Pomodoro : Gtk.Application { //Pomodoro extends Gtk.Application cla
         var winy = settings.get_int("window-height");
 
         if (posx != -1 ||  posy != -1)
-            window.move(posx, posy); //this noticably moves window from default
+            window.move(posx, posy); // TODO: this noticably moves window at startup
         if (winx != -1 || winy != -1)
             window.resize(winx, winy);
         //probably wont need this since we get sizing from gsettings now

@@ -5,6 +5,7 @@ public class Pomo.Window : Gtk.ApplicationWindow {
     int hbtn_counter = 0;
 
     public Window(Pomodoro application) {
+        // TODO: Look into requesting position to stop window from jumping on open
         Object (application: application,
                 height_request: 480,
                 width_request: 800); //eliminate need to set size every start
@@ -18,8 +19,8 @@ public class Pomo.Window : Gtk.ApplicationWindow {
 
         //connect before_destroy function to window termination for hi-jacking
         delete_event.connect(e => {
-            return false;
-            //return before_destroy();
+            //return false;
+            return before_destroy();
         });
 
         //add buttons for headerbar
@@ -31,7 +32,7 @@ public class Pomo.Window : Gtk.ApplicationWindow {
         var menu_button = new Gtk.Button.from_icon_name("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
         menu_button.valign = Gtk.Align.CENTER;
 
-        //add d/m settings switch
+        // TODO: Not Working: add d/m settings switch
         var dicon = new Gtk.Image();
         var licon = new Gtk.Image();
         dicon.gicon = new ThemedIcon(LIGHT_MODE);
