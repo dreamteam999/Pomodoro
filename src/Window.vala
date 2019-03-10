@@ -1,25 +1,20 @@
 public class Pomo.Window : Gtk.ApplicationWindow {
-    public GLib.Settings settings;
+    //public GLib.Settings settings;
     private const string LIGHT_MODE = "display-brightness-symbolic";
     private const string DARK_MODE = "weather-clear-night-symbolic";
     int hbtn_counter = 0;
 
-
     public Window(Pomodoro application) {
         Object (application: application,
-                height_request: 640,
-                width_request: 480); //eliminate redundant window set size
+                height_request: 480,
+                width_request: 800); //eliminate need to set size every start
     }
     construct {
-        //setup gsettings, initialize the object with our application
-        //settings = new GLib.Settings("com.github.DreamTeam999.Pomodoro");
+        //initialize the object with our application
         //setup application defaults
         //set_default_size(640, 480);
         border_width = 10;
-        window_position = Gtk.WindowPosition.CENTER;
         //pull screen location and window dimensions from gsettings (see data/gschema.xml)
-        move(settings.get_int("position-x"), settings.get_int("position-y"));
-        resize(settings.get_int("window-width"), settings.get_int("window-height"));
 
         //connect before_destroy function to window termination for hi-jacking
         delete_event.connect(e => {
@@ -36,6 +31,10 @@ public class Pomo.Window : Gtk.ApplicationWindow {
         menu_button.valign = Gtk.Align.CENTER;
 
         //add d/m settings switch
+        var dicon = new Gtk.Image();
+        var licon = new Gtk.Image();
+        dicon.gicon = new ThemedIcon(LIGHT_MODE);
+        licon.gicon = new ThemedIcon(DARK_MODE);
         var mode_switch = new Granite.ModeSwitch.from_icon_name (LIGHT_MODE, DARK_MODE);
         mode_switch.primary_icon_tooltip_text = "Light Mode";
         mode_switch.secondary_icon_tooltip_text = "Dark Mode";
@@ -74,20 +73,18 @@ public class Pomo.Window : Gtk.ApplicationWindow {
     // so they can be re-loaded when the application is launched again.
     // Only after getting the current information and saving that info to gschema.xml does
     // the function return false and close the program as requested
+        public bool before_destroy() {
+            int width, height, x, y;
+            get_size(out width, out height);
+            get_position(out x, out y);/*
+            //saves the window size before closing
+            settings.set_int("position-x", x);
+            settings.set_int("position-y", y);
+            settings.set_int("window-width", width);
+            settings.set_int("window-height", height);*/
 
-    public bool before_destroy() {
-        int width, height, x, y;
-        get_size(out width, out height);
-        get_position(out x, out y);
-        //saves the window size before closing
-        settings.set_int("position-x", x);
-        settings.set_int("position-y", y);
-        settings.set_int("window-width", width);
-        settings.set_int("window-height", height);
-
-        return false;
-    }
-
+            return false;
+        }
 }
 
 
