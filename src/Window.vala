@@ -9,9 +9,9 @@ public class Pomo.Window : Gtk.ApplicationWindow {
                 height_request: 480,
                 width_request: 800); //eliminate need to set size every start
 
-                // TC: This also has other side effects, such as making the above dimesions the minimum size.
-                // I don't consider this a bad thing, but in case we want the default size to be smaller
-                // in the future, this is a good note to have
+        // TC: This also has other side effects, such as making the above dimesions the minimum size.
+        // I don't consider this a bad thing, but in case we want the default size to be smaller
+        // in the future, this is a good note to have
     }
     construct {
         border_width = 10;
@@ -39,7 +39,7 @@ public class Pomo.Window : Gtk.ApplicationWindow {
         mode_switch.bind_property ("active", gtk_settings, "gtk_application_prefer_dark_theme");
 
         //initialize the headerbar
-        var headerbar = new Gtk.HeaderBar();
+        var headerbar = new Gtk.HeaderBar ();
         headerbar.set_title("DreamTeam Pomodoro");
         headerbar.set_subtitle("What will you accomplish today?");
         headerbar.show_close_button = true;
@@ -71,14 +71,21 @@ public class Pomo.Window : Gtk.ApplicationWindow {
     // so they can be re-loaded when the application is launched again.
     // Only after getting the current information and saving that info to gschema.xml does
     // the function return false and close the program as requested
-    public bool before_destroy() {
+    public bool before_destroy () {
+        bool darkmode;
         int width, height, x, y;
+        darkmode = Pomo.Window.construct.gtk_settings.gtk-widget-get-settings(mode_switch);
         get_size(out width, out height);
         get_position(out x, out y);
         Pomodoro.settings.set_int("position-x", x);
         Pomodoro.settings.set_int("position-y", y);
         Pomodoro.settings.set_int("window-width", width);
         Pomodoro.settings.set_int("window-height", height);
+        if(darkmode) {
+            Pomodoro.settings.set_boolean("dark-mode", true);
+        } else {
+            Pomodoro.settings.set_boolean("dark-mode", false); 
+        }
 
         return false;
         }
