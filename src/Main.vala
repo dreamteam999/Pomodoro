@@ -13,18 +13,6 @@ public class Pomodoro : Gtk.Application { //Pomodoro extends Gtk.Application cla
     protected override void activate () {
         //new window object as defined in Window.vala
         var window = new Pomo.Window (this);
-        var posx = settings.get_int ("position-x");
-        var posy = settings.get_int ("position-y");
-        var winx = settings.get_int ("window-width");
-        var winy = settings.get_int ("window-height");
-
-        if (posx != -1 ||  posy != -1) {
-            window.move(posx, posy); // TODO: this noticably moves window at startup
-        }
-
-        if (winx != -1 || winy != -1) {
-            window.resize (winx, winy);
-        }
 
         add_window (window);
     }

@@ -60,6 +60,18 @@ public class Pomo.Window : Gtk.ApplicationWindow {
             miscbutton.label = "Settings requested";
 		});
 
+        int posx = Pomodoro.settings.get_int ("position-x");
+        int posy = Pomodoro.settings.get_int ("position-y");
+        int winx = Pomodoro.settings.get_int ("window-width");
+        int winy = Pomodoro.settings.get_int ("window-height");
+
+        if (posx != -1 ||  posy != -1) {
+            this.move(posx, posy);
+        }
+
+        if (winx != -1 || winy != -1) {
+            this.resize (winx, winy);
+        }
 
         //Recursively shows a widget, and any child widgets (if the widget is a container)
         show_all();
