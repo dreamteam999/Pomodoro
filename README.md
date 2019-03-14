@@ -13,6 +13,42 @@ A simple Pomodoro timer designed with eOS and Pantheon in mind.
  5. If you have fewer than four `poms`, take a short break (3–5 minutes), start a new `pom`.
  6. After four pomodoros, take a long break (15–30 minutes). It’s a good idea to get away maybe go on a walk during long breaks. Reset the `pom` counter and start over.
 
+<<<<<<< HEAD
+=======
+### Building a Timer obj
+
+ * Timer
+    * 
+    * string: timername
+    * string: alarmname (path to alarm sound)
+    * double: timeleft
+    * int:    position in timer stack (1-NaN)
+    * int:    pomodoro's completed (1-4)
+    * struct containing an enum for one of 25/30/60 `pomodoro` sizes
+    * struct containing four break timer values 5/10 for short, 30/40 for long
+
+See [glib.Timer](https://developer.gnome.org/glib/stable/glib-Timers.html)
+
+### Building a Layout
+
+I suspect we will have to build a `gtk.GridView` containing `gtk.Widget`s which contain:
+ * a "clock" `gicon`
+ * the title of a task (can be blank by default but updated from a textbox widget)
+ * the number of `pomodoro`s completed
+ * the time left in the current `pomodoro`
+
+See [gtk.flowbox](https://python-gtk-3-tutorial.readthedocs.io/en/latest/layout.html#id5)
+
+### What do we want in settings?
+
+[Building the Menu](https://valadoc.org/gtk+-3.0/Gtk.MenuButton.html)
+
+ * Cancel current timer
+ * Trinary widget for Pomodoro size
+ * Trinary widget for short break sizes
+ * Trinary widget for long break sizes (consider tying the long/short break denominations together forcing 25/5:30, 30/10:40. 
+
+>>>>>>> e553713... update readme
 ### Etc
 
 * [Glib Basic Types](https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar)
