@@ -35,6 +35,8 @@ I suspect we will have to build a `gtk.GridView` containing `gtk.Widget`s which 
  * the number of `pomodoro`s completed
  * the time left in the current `pomodoro`
 
+See [gtk.flowbox](https://python-gtk-3-tutorial.readthedocs.io/en/latest/layout.html#id5)
+
 ### What do we want in settings?
 
 [Building the Menu](https://valadoc.org/gtk+-3.0/Gtk.MenuButton.html)
