@@ -13,6 +13,23 @@ A simple Pomodoro timer designed with eOS and Pantheon in mind.
  5. If you have fewer than four `poms`, take a short break (3–5 minutes), start a new `pom`.
  6. After four pomodoros, take a long break (15–30 minutes). It’s a good idea to get away maybe go on a walk during long breaks. Reset the `pom` counter and start over.
 
+### Build / Installation
+
+Build:
+```
+$ meson build --prefix=/usr
+$ cd build
+$ ninja
+```
+You can then run the application with
+```
+$ ./src/com.github.DreamTeam999.Pomodoro 
+```
+Or you can install it with
+```
+$ ninja install
+```
+
 ### Building a Timer obj
 
  * Timer
