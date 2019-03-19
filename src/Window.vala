@@ -3,6 +3,10 @@ public class Pomo.Window : Gtk.ApplicationWindow {
     private const string DARK_MODE = "weather-clear-night-symbolic";
     int hbtn_counter = 0;
     bool darkmode;
+    double timelim = 25;
+    double timeleft;
+    string timelabel;
+    int i = 0;
 
     public Window(Pomodoro application) {
         // TODO: Look into requesting position to stop window from jumping on open
@@ -22,6 +26,8 @@ public class Pomo.Window : Gtk.ApplicationWindow {
             return before_destroy();
         });
 
+        /*  Start Headerbar */
+        /*                  */
         //add buttons for headerbar
         var miscbutton = new Gtk.Button.with_label("New Timer (0)");
         miscbutton.get_style_context().add_class("suggested-action");
@@ -48,11 +54,29 @@ public class Pomo.Window : Gtk.ApplicationWindow {
         headerbar.pack_end (menu_button); //push to right of HB
         headerbar.pack_end (mode_switch);
         set_titlebar (headerbar); //activate the headerbar
+        /* End Headerbar */
+        /* Start MainWindow */
+        var timerlabel = new Gtk.Label("00:00:00");
+        timerlabel.get_style_context ().add_class ("h1");
 
-        //button events
-        //connect to miscbutton's "clicked" signal
+        var pomogrid = new Gtk.Grid ();
+        pomogrid.attach(timerlabel, 0, 0, 3, 1);
+        add(pomogrid);
+
+        /*          BUTTON EVENTS                    */
+        /* connect to miscbutton's "clicked" signal */
         miscbutton.clicked.connect (() => {
 			// Emitted when the button has been activated:
+            var timer = new GLib.Timer();
+            timer.start();
+            for(i = 0; i < timelim; i++) {
+                timeleft = timelim - timer.elapsed();
+                GLib.Timeout.add_seconds(1, () => {
+                    timerlabel.set_label(timeleft.to_string());                    
+                    return true;
+                });
+
+            }
 			miscbutton.label = "I was clicked (%d) times!".printf (++this.hbtn_counter);
 		});
         //connect menu buton
@@ -79,14 +103,13 @@ public class Pomo.Window : Gtk.ApplicationWindow {
     }
 
     // This function returns false by default, and has no default actions
-    // Here, we hi-jack the function to add saving the window dimensions/location to gsettings
+    // Here, we hi-jack the function to add saving the window dimen/location to gsettings
     // so they can be re-loaded when the application is launched again.
     // Only after getting the current info and saving that info to gschema.xml does
     // the function return false and close the program as requested
     public bool before_destroy () {
         int width, height, x, y;
-        if(Pomo.Window.mode_switch
-        darkmode;
+        //if(Pomo.Window.mode_switch(darkmode))
         get_size(out width, out height);
         get_position(out x, out y);
         Pomodoro.settings.set_int("position-x", x);
@@ -100,7 +123,7 @@ public class Pomo.Window : Gtk.ApplicationWindow {
         }
 
         return false;
-        }
+    }
 }
 
 

@@ -16,6 +16,7 @@ A simple Pomodoro timer designed with eOS and Pantheon in mind.
 ### Build / Installation
 
 Build:
+
 ```
 $ meson build --prefix=/usr
 $ cd build
@@ -62,6 +63,7 @@ See [gtk.flowbox](https://python-gtk-3-tutorial.readthedocs.io/en/latest/layout.
  * Trinary widget for Pomodoro size
  * Trinary widget for short break sizes
  * Trinary widget for long break sizes (consider tying the long/short break denominations together forcing 25/5:30, 30/10:40. 
+
 
 ### Etc
 
