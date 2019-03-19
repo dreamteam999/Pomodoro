@@ -1,4 +1,7 @@
-public class Pomo.Window : Gtk.ApplicationWindow {
+namespace Pomodoro {
+
+public class Window : Gtk.ApplicationWindow {
+    public static GLib.Settings settings;
     private const string LIGHT_MODE = "display-brightness-symbolic";
     private const string DARK_MODE = "weather-clear-night-symbolic";
     int hbtn_counter = 0;
@@ -8,12 +11,13 @@ public class Pomo.Window : Gtk.ApplicationWindow {
     double timelim = 25;
     //double timeleft;
 
-    public Window(Pomodoro application) {
+    private Window window;
+
+    public Window(Application app) {
         // TODO: Look into requesting position to stop window from jumping on open
         Object (application: application,
                 height_request: 480,
                 width_request: 800); //eliminate need to set size every start
-
         // TC: This has other side effects, such as making the above dimens the min size.
         // I don't consider this a bad thing, but in case we want the default size to be smaller
         // in the future, this is a good note to have
@@ -95,10 +99,10 @@ public class Pomo.Window : Gtk.ApplicationWindow {
             miscbutton.label = "Settings requested";
 		});
 
-        int posx = Pomodoro.settings.get_int ("position-x");
-        int posy = Pomodoro.settings.get_int ("position-y");
-        int winx = Pomodoro.settings.get_int ("window-width");
-        int winy = Pomodoro.settings.get_int ("window-height");
+        int posx = settings.get_int ("position-x");
+        int posy = settings.get_int ("position-y");
+        int winx = settings.get_int ("window-width");
+        int winy = settings.get_int ("window-height");
 
         if (posx != -1 ||  posy != -1) {
             this.move(posx, posy);
@@ -144,15 +148,16 @@ public class Pomo.Window : Gtk.ApplicationWindow {
         //if(Pomo.Window.mode_switch(darkmode))
         get_size(out width, out height);
         get_position(out x, out y);
-        Pomodoro.settings.set_int("position-x", x);
-        Pomodoro.settings.set_int("position-y", y);
-        Pomodoro.settings.set_int("window-width", width);
-        Pomodoro.settings.set_int("window-height", height);
+        settings.set_int("position-x", x);
+        settings.set_int("position-y", y);
+        settings.set_int("window-width", width);
+        settings.set_int("window-height", height);
         if(darkmode) {
-            Pomodoro.settings.set_boolean("dark-mode", true);
+            settings.set_boolean("dark-mode", true);
         } else {
-            Pomodoro.settings.set_boolean("dark-mode", false); 
+            settings.set_boolean("dark-mode", false); 
         }
         return false;
     }
 }
+} //namespace Pomodoro

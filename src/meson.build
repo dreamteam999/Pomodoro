@@ -9,6 +9,7 @@ executable(
     meson.project_name(),
     'Main.vala',
     'Window.vala',
+    'Application.vala',
 
     dependencies: timer_dependencies,
     install: true
