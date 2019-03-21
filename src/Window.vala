@@ -11,12 +11,12 @@ public class Window : Gtk.ApplicationWindow {
     double timelim = 25;
     //double timeleft;
 
-    private Window window;
+    //private Window window;
 
     public Window(Application app) {
         // TODO: Look into requesting position to stop window from jumping on open
         Object (application: application,
-                height_request: 480,
+                height_request: 600,
                 width_request: 800); //eliminate need to set size every start
         // TC: This has other side effects, such as making the above dimens the min size.
         // I don't consider this a bad thing, but in case we want the default size to be smaller
@@ -65,8 +65,8 @@ public class Window : Gtk.ApplicationWindow {
         set_titlebar (headerbar); //activate the headerbar
         /* End Headerbar */
         /* Start MainWindow */
-        //var minuteslabel = new Gtk.Label("00:");
-        //var secondslabel = new Gtk.Label("00");
+        var minuteslabel = new Gtk.Label("00:");
+        var secondslabel = new Gtk.Label("00");
         minuteslabel.set_label("00:");
         secondslabel.set_label("00:");
         minuteslabel.get_style_context ().add_class ("h1");

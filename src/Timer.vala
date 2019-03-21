@@ -1,4 +1,7 @@
-public class Pomo.Timer : Gtk.Grid {
+namespace Pomodoro {
+namespace Timer {
+
+public class PTimer : Gtk.Grid {
     int POM_CONST = 25; //seconds for now
     int numPoms; 
     int i;
@@ -48,11 +51,16 @@ public class Pomo.Timer : Gtk.Grid {
     }
 
     construct {
-        //var ptimerLabel = new Gtk.Label ("00:00");
+        var ptimerLabel = new Gtk.Label ("00:00");
         // make themeable in app.css
-        //ptimerLabel.get_style_context ().add_class ("h1");
+        ptimerLabel.get_style_context ().add_class ("h1");
         var ptimer = new GLib.Timer();
+        this.attach(secondslabel, 0, 0, 3, 1);
+        add(this);
         ptimer.start();
     }
 
 }
+
+} //namespace Timer
+} //namespace Pomodoro
