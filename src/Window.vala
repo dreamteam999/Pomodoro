@@ -4,16 +4,13 @@ public class Window : Gtk.ApplicationWindow {
     public static GLib.Settings settings;
     private const string LIGHT_MODE = "display-brightness-symbolic";
     private const string DARK_MODE = "weather-clear-night-symbolic";
-    int hbtn_counter = 0;
-    int i = 0;
     bool darkmode;
     double timeelapsed;
     double timelim = 25;
-    //double timeleft;
 
     public Window(Application app) {
         // TODO: Look into requesting position to stop window from jumping on open
-        Object (application: application, //app instance
+        Object (application: app, //app instance
                 height_request: 600,
                 width_request: 800); //eliminate need to set size every start
         // TC: Has other side effects, such as making the above dimens the min size.
@@ -80,26 +77,12 @@ public class Window : Gtk.ApplicationWindow {
 			// Emitted when the button has been activated:
             var timer = new GLib.Timer();
             timer.start();
-
-            GLib.Timeout.add_seconds(1, () => {
-                if(!timeLeft())
-                    return false;
-                return true;
-            });
-
-            /*for(i = 0; i < timelim; i++) {
-                timeelapsed = timelim - timer.elapsed();
-                GLib.Timeout.add_seconds(1, () => {
-                    //updateTimer(timeelapsed);
-                    secondslabel.set_label(timeelapsed.to_string());                    
-                    return true;
-                });
-            }*/
-			miscbutton.label = "I was clicked (%d) times!".printf (++this.hbtn_counter);
+            //this will run timeLeft every 1s until !timeLeft
+            GLib.Timeout.add_seconds(1, timeLeft);//might be cleaner than below
+			miscbutton.label = "Stop Timer";
 		});
         //connect menu buton
-        menu_button.clicked.connect (() => {
-			// Emitted when the button has been activated:
+        menu_button.clicked.connect (() => { // Emitted when button clicked:
             miscbutton.label = "Settings requested";
 		});
 
@@ -114,7 +97,7 @@ public class Window : Gtk.ApplicationWindow {
         if (winx != -1 || winy != -1) {
             this.resize (winx, winy);
         }
-        //Recursively shows a widget, and any child widgets (if the widget is a container)
+        //Recursively shows widgets, and any child widgets (if widget is container) 
         show_all();
     } //construct
 
@@ -138,10 +121,10 @@ public class Window : Gtk.ApplicationWindow {
     }
 
     public void updateTimerLabel(int m, int s) {
-        minuteslabel.set_label(m.to_string());
-        secondslabel.set_label(s.to_string());
+        minuteslabel.set_text(m.to_string());
+        secondslabel.set_text(s.to_string());
     }
-
+    //Derives time in 60's, modfied from gnome clocks
     public void time_to_ms (double t, out int m, out int s, out double remainder) {
         m = (int) t / 60;
         t = t % 60;
