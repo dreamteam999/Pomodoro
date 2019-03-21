@@ -2,7 +2,6 @@ namespace Pomodoro {
 
 public class Application : Gtk.Application {
 
-
     public Application () {
         Object(application_id: "com.github.DreamTeam999.Pomodoro", flags: ApplicationFlags.FLAGS_NONE);
     }
@@ -15,11 +14,9 @@ public class Application : Gtk.Application {
     }
 
     protected override void activate () {
-        //new window object as defined in Window.vala
-        window = new Window (this);
+        window = new Window (this); //new window object defined in Window.vala
 
         add_window (window);
     }
-
 }
 } //namespace Pomodoro

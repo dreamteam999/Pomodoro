@@ -11,20 +11,19 @@ public class Window : Gtk.ApplicationWindow {
     double timelim = 25;
     //double timeleft;
 
-    //private Window window;
-
     public Window(Application app) {
         // TODO: Look into requesting position to stop window from jumping on open
-        Object (application: application,
+        Object (application: application, //app instance
                 height_request: 600,
                 width_request: 800); //eliminate need to set size every start
-        // TC: This has other side effects, such as making the above dimens the min size.
-        // I don't consider this a bad thing, but in case we want the default size to be smaller
-        // in the future, this is a good note to have
+        // TC: Has other side effects, such as making the above dimens the min size.
+        // I don't consider this a bad thing, but in case we want the default 
+        // size to be smaller in the future, this is a good note to have
     }
 
-    Gtk.Label minuteslabel;
-    Gtk.Label secondslabel;
+    Gtk.Label minuteslabel; //we declare these globally Pomodoro namespace
+    Gtk.Label secondslabel; //so that we can access them in member functions
+    private GLib.Timer timer;
 
     construct {
 
@@ -67,15 +66,13 @@ public class Window : Gtk.ApplicationWindow {
         /* Start MainWindow */
         var minuteslabel = new Gtk.Label("00:");
         var secondslabel = new Gtk.Label("00");
-        minuteslabel.set_label("00:");
-        secondslabel.set_label("00:");
         minuteslabel.get_style_context ().add_class ("h1");
         secondslabel.get_style_context ().add_class ("h1");
 
         var pomogrid = new Gtk.Grid ();
-        pomogrid.attach(secondslabel, 0, 0, 3, 1);
-        pomogrid.attach(minuteslabel, 1, 1, 3, 1);
-        add(pomogrid);
+        pomogrid.attach(minuteslabel, 0, 0, 1, 1); //col, row, colW, rowW
+        pomogrid.attach(secondslabel, 1, 0, 1, 1);
+        add(pomogrid); //commit the grid that was constructed
 
         /*          BUTTON EVENTS                   */
         /* connect to miscbutton's "clicked" signal */
@@ -83,14 +80,21 @@ public class Window : Gtk.ApplicationWindow {
 			// Emitted when the button has been activated:
             var timer = new GLib.Timer();
             timer.start();
-            for(i = 0; i < timelim; i++) {
+
+            GLib.Timeout.add_seconds(1, () => {
+                if(!timeLeft())
+                    return false;
+                return true;
+            });
+
+            /*for(i = 0; i < timelim; i++) {
                 timeelapsed = timelim - timer.elapsed();
                 GLib.Timeout.add_seconds(1, () => {
-                    updateTimer(timeelapsed);
-                    //secondslabel.set_label(timeleft.to_string());                    
+                    //updateTimer(timeelapsed);
+                    secondslabel.set_label(timeelapsed.to_string());                    
                     return true;
                 });
-            }
+            }*/
 			miscbutton.label = "I was clicked (%d) times!".printf (++this.hbtn_counter);
 		});
         //connect menu buton
@@ -116,14 +120,21 @@ public class Window : Gtk.ApplicationWindow {
 
     public void startTimer() {}
 
+    public bool timeLeft() {
+        timeelapsed = timelim - timer.elapsed();
+        if(timeelapsed == 0)
+            return false;
+        updateTimer(timeelapsed);
+        return true;
+    }
+
     public void updateTimer(double timeelapsed) {
-        double t = Math.ceil(timelim - timeelapsed);
+            double t = Math.ceil(timelim - timeelapsed);
             int m;
             int s;
             double r;
             time_to_ms(t, out m, out s, out r);
             updateTimerLabel(m, s);
-
     }
 
     public void updateTimerLabel(int m, int s) {
