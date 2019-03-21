@@ -61,8 +61,8 @@ public class Window : Gtk.ApplicationWindow {
         set_titlebar (headerbar); //activate the headerbar
         /* End Headerbar */
         /* Start MainWindow */
-        var minuteslabel = new Gtk.Label("00:");
-        var secondslabel = new Gtk.Label("00");
+        minuteslabel = new Gtk.Label("00:");
+        secondslabel = new Gtk.Label("00");
         minuteslabel.get_style_context ().add_class ("h1");
         secondslabel.get_style_context ().add_class ("h1");
 
@@ -75,7 +75,7 @@ public class Window : Gtk.ApplicationWindow {
         /* connect to miscbutton's "clicked" signal */
         miscbutton.clicked.connect (() => {
 			// Emitted when the button has been activated:
-            var timer = new GLib.Timer();
+            timer = new GLib.Timer();
             timer.start();
             //this will run timeLeft every 1s until !timeLeft
             GLib.Timeout.add_seconds(1, timeLeft);//might be cleaner than below
