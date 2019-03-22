@@ -6,7 +6,7 @@ public class Window : Gtk.ApplicationWindow {
     private const string DARK_MODE = "weather-clear-night-symbolic";
     bool darkmode;
     double timeelapsed;
-    double timelim = 25;
+    double timelim = 5;
 
     public Window(Application app) {
         // TODO: Look into requesting position to stop window from jumping on open
@@ -34,7 +34,7 @@ public class Window : Gtk.ApplicationWindow {
         /*  Start Headerbar */
         /*                  */
         //add buttons for headerbar
-        var miscbutton = new Gtk.Button.with_label("New Timer (0)");
+        var miscbutton = new Gtk.Button.with_label("Start Timer");
         miscbutton.get_style_context().add_class("suggested-action");
         miscbutton.valign = Gtk.Align.CENTER; //center in HB
 
@@ -121,8 +121,10 @@ public class Window : Gtk.ApplicationWindow {
     }
 
     public void updateTimerLabel(int m, int s) {
-        minuteslabel.set_text(m.to_string());
-        secondslabel.set_text(s.to_string());
+        string tm = "%02d:".printf(m);
+        string ts = "%02d".printf(s);
+        minuteslabel.set_text(tm);
+        secondslabel.set_text(ts);
     }
     //Derives time in 60's, modfied from gnome clocks
     public void time_to_ms (double t, out int m, out int s, out double remainder) {
