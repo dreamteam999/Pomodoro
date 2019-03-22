@@ -6,7 +6,7 @@ public class Window : Gtk.ApplicationWindow {
     private const string DARK_MODE = "weather-clear-night-symbolic";
     bool darkmode;
     double timeelapsed;
-    double timelim = 5;
+    double timelim = 5; //minutes
 
     public Window(Application app) {
         // TODO: Look into requesting position to stop window from jumping on open
@@ -78,7 +78,7 @@ public class Window : Gtk.ApplicationWindow {
             timer = new GLib.Timer();
             timer.start();
             //this will run timeLeft every 1s until !timeLeft
-            GLib.Timeout.add_seconds(1, timeLeft);//might be cleaner than below
+            GLib.Timeout.add_seconds(1, timeLeft);//its more clear passing the function
 			miscbutton.label = "Stop Timer";
 		});
         //connect menu buton
@@ -104,19 +104,22 @@ public class Window : Gtk.ApplicationWindow {
     public void startTimer() {}
 
     public bool timeLeft() {
-        timeelapsed = timelim - timer.elapsed();
-        if(timeelapsed == 0)
-            return false;
+        timeelapsed = Math.ceil(timelim - timer.elapsed());
+        stdout.printf("p-te: %f", timeelapsed);
+        if(timeelapsed < 0) { //< lets the timer hit 0
+            return false; } //call alarm
         updateTimer(timeelapsed);
         return true;
     }
 
     public void updateTimer(double timeelapsed) {
-            double t = Math.ceil(timelim - timeelapsed);
+            double t = Math.ceil(timeelapsed);
+            //db: stdout.printf("tlim: %d, te %d, t:%d\n", (int)timelim, (int)timeelapsed, (int)t);
             int m;
             int s;
             double r;
             time_to_ms(t, out m, out s, out r);
+            //db: stdout.printf("time-ms: %d\n", (int)t);
             updateTimerLabel(m, s);
     }
 
