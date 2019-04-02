@@ -6,7 +6,7 @@ public class Window : Gtk.ApplicationWindow {
     private const string DARK_MODE = "weather-clear-night-symbolic";
     bool darkmode;
     double timeelapsed;
-    double timelim = 5; //minutes
+    double timelim = 90; //minutes
 
     public Window(Application app) {
         // TODO: Look into requesting position to stop window from jumping on open
@@ -37,10 +37,46 @@ public class Window : Gtk.ApplicationWindow {
         var miscbutton = new Gtk.Button.with_label("Start Timer");
         miscbutton.get_style_context().add_class("suggested-action");
         miscbutton.valign = Gtk.Align.CENTER; //center in HB
-
+        
+        /* Settings Menu */
         // add icon button -> submenu/popup
-        var menu_button = new Gtk.Button.from_icon_name("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
-        menu_button.valign = Gtk.Align.CENTER;
+        var menu_button = new Gtk.MenuButton();
+        menu_button.image = new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
+        menu_button.tooltip_text = "Menu";
+        //and it's menu
+        var menu_popover = new Gtk.Popover (menu_button);
+        menu_button.popover = menu_popover;
+        var tf_button = new Gtk.Button.with_label ("25");
+        tf_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"25min"},
+            ("Pomodoro Length"));
+        var to_button = new Gtk.Button.with_label ("30");
+        tf_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"30min"},
+            ("Pomodoro Length"));
+        var ff_button = new Gtk.Button.with_label ("45");
+        tf_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"45min"},
+            ("Pomodoro Length"));
+
+        var pomodoro_grid = new Gtk.Grid();
+        pomodoro_grid.column_homogeneous = true;
+        pomodoro_grid.hexpand = true;
+        pomodoro_grid.margin = 12;
+
+        pomodoro_grid.add (tf_button);
+        pomodoro_grid.add (to_button);
+        pomodoro_grid.add (ff_button);
+ 
+        var menu_grid = new Gtk.Grid();
+        menu_grid.margin_bottom = 3;
+        menu_grid.width_request = 200;
+
+        menu_grid.attach (pomodoro_grid, 0, 0);
+        menu_grid.show_all();
+
+        menu_popover.add (menu_grid);
+        /* End Settings Menu */
 
         //light/dark Granite.ModeSwitch
         var gtk_settings = Gtk.Settings.get_default ();
