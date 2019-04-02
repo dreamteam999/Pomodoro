@@ -23,7 +23,7 @@ public class Window : Gtk.ApplicationWindow {
     private GLib.Timer timer;
 
     construct {
-
+        darkmode = Application.settings.get_boolean ("dark-mode");
         border_width = 10;
         //connect before_destroy() to window terminator
         delete_event.connect(e => {
@@ -131,12 +131,14 @@ public class Window : Gtk.ApplicationWindow {
         /* End Settings Menu */
 
         //light/dark Granite.ModeSwitch
+        //https://github.com/elementary/granite/blob/master/lib/Widgets/ModeSwitch.vala
         var gtk_settings = Gtk.Settings.get_default ();
         var mode_switch = new Granite.ModeSwitch.from_icon_name (LIGHT_MODE, DARK_MODE);
         mode_switch.primary_icon_tooltip_text = "Light Mode";
         mode_switch.secondary_icon_tooltip_text = "Dark Mode";
         mode_switch.valign = Gtk.Align.CENTER;
         mode_switch.bind_property ("active", gtk_settings, "gtk_application_prefer_dark_theme");
+        Application.settings.bind("dark-mode", mode_switch, "active", SettingsBindFlags.DEFAULT);
 
         //initialize the headerbar
         var headerbar = new Gtk.HeaderBar ();
@@ -229,7 +231,7 @@ public class Window : Gtk.ApplicationWindow {
     // Here, we hi-jack the function to add saving the window dimen/location to gsettings
     // so they can be re-loaded when the application is launched again.
     // Only after getting the current info and saving that info to gschema.xml does
-    // the function return false and close the program as requested\
+    // the function return false and close the program as requested
     public bool before_destroy () {
         int width, height, x, y;
         //if(Pomo.Window.mode_switch(darkmode))
@@ -239,11 +241,11 @@ public class Window : Gtk.ApplicationWindow {
         Pomodoro.Application.settings.set_int("position-y", y);
         Pomodoro.Application.settings.set_int("window-width", width);
         Pomodoro.Application.settings.set_int("window-height", height);
-        /*if(darkmode) {
+        if(Application.settings.get_boolean("dark-mode")) {
             Application.settings.set_boolean("dark-mode", true);
         } else {
             Application.settings.set_boolean("dark-mode", false); 
-        }*/
+        }
         return false;
     }
 }

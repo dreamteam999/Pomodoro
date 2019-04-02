@@ -24,5 +24,10 @@
             <summary>Window Height</summary>
             <description>The saved height of the window</description>
 		</key>
+        <key name="dark-mode" type="b">
+            <default>false</default>
+            <summary>Darkmode enabled?</summary>
+            <description>Saved boolean value store the darkmode switch state.</description>
+        </key>
     </schema>
 </schemalist>
