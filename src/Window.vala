@@ -239,11 +239,11 @@ public class Window : Gtk.ApplicationWindow {
         Pomodoro.Application.settings.set_int("position-y", y);
         Pomodoro.Application.settings.set_int("window-width", width);
         Pomodoro.Application.settings.set_int("window-height", height);
-        if(darkmode) {
+        /*if(darkmode) {
             Application.settings.set_boolean("dark-mode", true);
         } else {
             Application.settings.set_boolean("dark-mode", false); 
-        }
+        }*/
         return false;
     }
 }
