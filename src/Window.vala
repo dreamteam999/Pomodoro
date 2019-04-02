@@ -1,7 +1,7 @@
 namespace Pomodoro {
 
 public class Window : Gtk.ApplicationWindow {
-    public static GLib.Settings settings;
+    //public static GLib.Settings settings;
     private const string LIGHT_MODE = "display-brightness-symbolic";
     private const string DARK_MODE = "weather-clear-night-symbolic";
     bool darkmode;
@@ -40,9 +40,10 @@ public class Window : Gtk.ApplicationWindow {
         
         /* Settings Menu */
         // add icon button -> submenu/popup
-        var menu_button = new Gtk.MenuButton();
+        var menu_button = new Gtk.MenuButton(); //autoconnects a menu
         menu_button.image = new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
         menu_button.tooltip_text = "Menu";
+
         //and it's menu
         var menu_popover = new Gtk.Popover (menu_button);
         menu_button.popover = menu_popover;
@@ -67,12 +68,42 @@ public class Window : Gtk.ApplicationWindow {
         pomodoro_grid.add (tf_button);
         pomodoro_grid.add (to_button);
         pomodoro_grid.add (ff_button);
- 
+        // break length buttons
+        var tfb_button = new Gtk.Button.with_label ("3/15");
+        tf_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"3min Break"},
+            ("15min Long Break"));
+        var ftb_button = new Gtk.Button.with_label ("5/25");
+        tf_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"5min Break"},
+            ("25min Long Break"));
+        var ttb_button = new Gtk.Button.with_label ("10/30");
+        tf_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"10min Break"},
+            ("30min Long Break"));
+
+        var break_grid = new Gtk.Grid();
+        break_grid.column_homogeneous = true;
+        break_grid.hexpand = true;
+        break_grid.margin = 12;
+        
+        break_grid.add(tfb_button);
+        break_grid.add(ftb_button);
+        break_grid.add(ttb_button);
+
+        var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+        separator.margin_top = separator.margin_bottom = 3;
+        var separator2 = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
+        separator2.margin_top = separator2.margin_bottom = 3;
+        // connect all grids to the popover
         var menu_grid = new Gtk.Grid();
         menu_grid.margin_bottom = 3;
         menu_grid.width_request = 200;
 
         menu_grid.attach (pomodoro_grid, 0, 0);
+        menu_grid.attach (separator, 0, 1);
+        menu_grid.attach (break_grid, 0, 2);
+        menu_grid.attach (separator2, 0, 3);
         menu_grid.show_all();
 
         menu_popover.add (menu_grid);
@@ -117,15 +148,15 @@ public class Window : Gtk.ApplicationWindow {
             GLib.Timeout.add_seconds(1, timeLeft);//its more clear passing the function
 			miscbutton.label = "Stop Timer";
 		});
-        //connect menu buton
+        /*connect menu buton
         menu_button.clicked.connect (() => { // Emitted when button clicked:
-            miscbutton.label = "Settings requested";
-		});
+            //miscbutton.label = "Settings requested";
+		});*/
 
-        int posx = settings.get_int ("position-x");
-        int posy = settings.get_int ("position-y");
-        int winx = settings.get_int ("window-width");
-        int winy = settings.get_int ("window-height");
+        int posx = Pomodoro.Application.settings.get_int ("position-x");
+        int posy = Pomodoro.Application.settings.get_int ("position-y");
+        int winx = Pomodoro.Application.settings.get_int ("window-width");
+        int winy = Pomodoro.Application.settings.get_int ("window-height");
 
         if (posx != -1 ||  posy != -1) {
             this.move(posx, posy);
@@ -183,14 +214,14 @@ public class Window : Gtk.ApplicationWindow {
         //if(Pomo.Window.mode_switch(darkmode))
         get_size(out width, out height);
         get_position(out x, out y);
-        settings.set_int("position-x", x);
-        settings.set_int("position-y", y);
-        settings.set_int("window-width", width);
-        settings.set_int("window-height", height);
+        Pomodoro.Application.settings.set_int("position-x", x);
+        Pomodoro.Application.settings.set_int("position-y", y);
+        Pomodoro.Application.settings.set_int("window-width", width);
+        Pomodoro.Application.settings.set_int("window-height", height);
         if(darkmode) {
-            settings.set_boolean("dark-mode", true);
+            Pomodoro.Application.settings.set_boolean("dark-mode", true);
         } else {
-            settings.set_boolean("dark-mode", false); 
+            Pomodoro.Application.settings.set_boolean("dark-mode", false); 
         }
         return false;
     }

@@ -8,6 +8,23 @@ public class PTimer : Gtk.Grid {
     private uint timeout_id;
     private int timeleft;
     GLib.Timer timer;
+/*
+    public enum TimerState {
+        STOPPED,
+        STARTED,
+        PAUSED
+    }
+
+    void pauseTimer() {
+
+    }*/
+
+    void stopTimer() {
+        //take an existing timer
+        //check if timer doesn't exist
+        //run timerstop, reset the timer to POM_CONST
+        timer.stop();
+    }
 
     public void startTimer () {
     //countdown_frame.get_style_context ().remove_class ("clocks-paused");
@@ -41,13 +58,6 @@ public class PTimer : Gtk.Grid {
             
             //g_timeout_add_seconds(1, gtk_label_set_text(ptimerLabel, lim)); //tick each second
         }
-    }
-
-    void stopTimer() {
-        //take an existing timer
-        //check if timer doesn't exist
-        //run timerstop, reset the timer to POM_CONST
-        timer.stop();
     }
 
     construct {
