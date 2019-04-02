@@ -91,6 +91,26 @@ public class Window : Gtk.ApplicationWindow {
         break_grid.add(ftb_button);
         break_grid.add(ttb_button);
 
+        var reset_label = new Gtk.Label ("Reset Pomodoros");
+        reset_label.halign = Gtk.Align.START;
+        reset_label.hexpand = true;
+        reset_label.margin_start = 3;
+        reset_label.margin_end = 3;
+
+        var quit_button = new Gtk.Button ();
+        // makes button flat with menus css
+        quit_button.get_style_context ().add_class (Gtk.STYLE_CLASS_MENUITEM);
+
+        var reset_grid = new Gtk.Grid();
+        reset_grid.column_homogeneous = true;
+        reset_grid.hexpand = true;
+        reset_grid.margin = 6;
+        
+        reset_grid.add (reset_label);
+        quit_button.add (reset_grid);
+
+
+        //popover separators
         var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
         separator.margin_top = separator.margin_bottom = 3;
         var separator2 = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
@@ -104,6 +124,7 @@ public class Window : Gtk.ApplicationWindow {
         menu_grid.attach (separator, 0, 1);
         menu_grid.attach (break_grid, 0, 2);
         menu_grid.attach (separator2, 0, 3);
+        menu_grid.attach (quit_button, 0, 4);
         menu_grid.show_all();
 
         menu_popover.add (menu_grid);
@@ -153,10 +174,10 @@ public class Window : Gtk.ApplicationWindow {
             //miscbutton.label = "Settings requested";
 		});*/
 
-        int posx = Pomodoro.Application.settings.get_int ("position-x");
-        int posy = Pomodoro.Application.settings.get_int ("position-y");
-        int winx = Pomodoro.Application.settings.get_int ("window-width");
-        int winy = Pomodoro.Application.settings.get_int ("window-height");
+        int posx = Application.settings.get_int ("position-x");
+        int posy = Application.settings.get_int ("position-y");
+        int winx = Application.settings.get_int ("window-width");
+        int winy = Application.settings.get_int ("window-height");
 
         if (posx != -1 ||  posy != -1) {
             this.move(posx, posy);
@@ -208,7 +229,7 @@ public class Window : Gtk.ApplicationWindow {
     // Here, we hi-jack the function to add saving the window dimen/location to gsettings
     // so they can be re-loaded when the application is launched again.
     // Only after getting the current info and saving that info to gschema.xml does
-    // the function return false and close the program as requested
+    // the function return false and close the program as requested\
     public bool before_destroy () {
         int width, height, x, y;
         //if(Pomo.Window.mode_switch(darkmode))
@@ -219,9 +240,9 @@ public class Window : Gtk.ApplicationWindow {
         Pomodoro.Application.settings.set_int("window-width", width);
         Pomodoro.Application.settings.set_int("window-height", height);
         if(darkmode) {
-            Pomodoro.Application.settings.set_boolean("dark-mode", true);
+            Application.settings.set_boolean("dark-mode", true);
         } else {
-            Pomodoro.Application.settings.set_boolean("dark-mode", false); 
+            Application.settings.set_boolean("dark-mode", false); 
         }
         return false;
     }
