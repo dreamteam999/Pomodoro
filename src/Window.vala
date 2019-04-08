@@ -158,13 +158,13 @@ public class Window : Gtk.ApplicationWindow {
         secondslabel.get_style_context ().add_class ("h1");
 
         var indicator1 = new Gtk.Image();
-        indicator1.set_from_file("indicator.png");
+        indicator1.set_from_icon_name("edit-flag", Gtk.IconSize.LARGE_TOOLBAR);
         var indicator2 = new Gtk.Image();
-        indicator2.set_from_file("data/indicator.png");
+        indicator2.set_from_icon_name("edit-flag", Gtk.IconSize.LARGE_TOOLBAR);
         var indicator3 = new Gtk.Image();
-        indicator3.set_from_file("indicator.svg");
+        indicator3.set_from_icon_name("edit-flag", Gtk.IconSize.LARGE_TOOLBAR);
         var indicator4 = new Gtk.Image();
-        indicator4.set_from_file("indicator.svg");
+        indicator4.set_from_icon_name("edit-flag", Gtk.IconSize.LARGE_TOOLBAR);
 
         var indicator_grid = new Gtk.Grid();
         indicator_grid.column_homogeneous = true;
