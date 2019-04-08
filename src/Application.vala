@@ -12,7 +12,7 @@ public class Application : Gtk.Application {
     private Window window;
 
     static construct {
-        //setup gsettings as a galobal obj
+        //setup gsettings as a global obj
         settings = new GLib.Settings ("com.github.DreamTeam999.Pomodoro");
     }
 

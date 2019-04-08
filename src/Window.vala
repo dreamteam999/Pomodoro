@@ -6,7 +6,7 @@ public class Window : Gtk.ApplicationWindow {
     private const string DARK_MODE = "weather-clear-night-symbolic";
     bool darkmode;
     double timeelapsed;
-    double timelim = 90; //minutes
+    double timelim = 10; //minutes
 
     public Window(Application app) {
         // TODO: Look into requesting position to stop window from jumping on open
@@ -33,32 +33,32 @@ public class Window : Gtk.ApplicationWindow {
 
         /*  Start Headerbar */
         /*                  */
-        //add buttons for headerbar
         var miscbutton = new Gtk.Button.with_label("Start Timer");
         miscbutton.get_style_context().add_class("suggested-action");
         miscbutton.valign = Gtk.Align.CENTER; //center in HB
         
-        /* Settings Menu */
-        // add icon button -> submenu/popup
+        /* Settings Menu       */
+        /* add settings cog... */
         var menu_button = new Gtk.MenuButton(); //autoconnects a menu
         menu_button.image = new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
         menu_button.tooltip_text = "Menu";
 
-        //and it's menu
+        // ...and it's menu
         var menu_popover = new Gtk.Popover (menu_button);
         menu_button.popover = menu_popover;
+
         var tf_button = new Gtk.Button.with_label ("25");
         tf_button.tooltip_markup = Granite.markup_accel_tooltip (
-            {"25min"},
-            ("Pomodoro Length"));
+            {"<Ctrl>2"},
+            ("25min Pomodoro"));
         var to_button = new Gtk.Button.with_label ("30");
-        tf_button.tooltip_markup = Granite.markup_accel_tooltip (
-            {"30min"},
-            ("Pomodoro Length"));
+        to_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"<Ctrl>3"},
+            ("30min Pomodoro"));
         var ff_button = new Gtk.Button.with_label ("45");
-        tf_button.tooltip_markup = Granite.markup_accel_tooltip (
-            {"45min"},
-            ("Pomodoro Length"));
+        ff_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"<Ctrl>4"},
+            ("45min Pomodoro"));
 
         var pomodoro_grid = new Gtk.Grid();
         pomodoro_grid.column_homogeneous = true;
@@ -70,23 +70,23 @@ public class Window : Gtk.ApplicationWindow {
         pomodoro_grid.add (ff_button);
         // break length buttons
         var tfb_button = new Gtk.Button.with_label ("3/15");
-        tf_button.tooltip_markup = Granite.markup_accel_tooltip (
-            {"3min Break"},
-            ("15min Long Break"));
+        tfb_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"<Ctrl><Shift>2"},
+            ("3 and 15min Breaks"));
         var ftb_button = new Gtk.Button.with_label ("5/25");
-        tf_button.tooltip_markup = Granite.markup_accel_tooltip (
-            {"5min Break"},
-            ("25min Long Break"));
+        ftb_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"<Ctrl><Shift>3"},
+            ("5 and 25min Breaks"));
         var ttb_button = new Gtk.Button.with_label ("10/30");
-        tf_button.tooltip_markup = Granite.markup_accel_tooltip (
-            {"10min Break"},
-            ("30min Long Break"));
+        ttb_button.tooltip_markup = Granite.markup_accel_tooltip (
+            {"<Ctrl><Shift>4"},
+            ("10 and 30min Breaks"));
 
         var break_grid = new Gtk.Grid();
         break_grid.column_homogeneous = true;
         break_grid.hexpand = true;
         break_grid.margin = 12;
-        
+
         break_grid.add(tfb_button);
         break_grid.add(ftb_button);
         break_grid.add(ttb_button);
@@ -105,23 +105,22 @@ public class Window : Gtk.ApplicationWindow {
         reset_grid.column_homogeneous = true;
         reset_grid.hexpand = true;
         reset_grid.margin = 6;
-        
+
         reset_grid.add (reset_label);
         quit_button.add (reset_grid);
-
 
         //popover separators
         var separator = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
         separator.margin_top = separator.margin_bottom = 3;
         var separator2 = new Gtk.Separator (Gtk.Orientation.HORIZONTAL);
         separator2.margin_top = separator2.margin_bottom = 3;
-        // connect all grids to the popover
+
         var menu_grid = new Gtk.Grid();
         menu_grid.margin_bottom = 3;
         menu_grid.width_request = 200;
 
-        menu_grid.attach (pomodoro_grid, 0, 0);
-        menu_grid.attach (separator, 0, 1);
+        menu_grid.attach (pomodoro_grid, 0, 0); // connect all grids to the popover
+        menu_grid.attach (separator, 0, 1); // col, row
         menu_grid.attach (break_grid, 0, 2);
         menu_grid.attach (separator2, 0, 3);
         menu_grid.attach (quit_button, 0, 4);
@@ -137,8 +136,10 @@ public class Window : Gtk.ApplicationWindow {
         mode_switch.primary_icon_tooltip_text = "Light Mode";
         mode_switch.secondary_icon_tooltip_text = "Dark Mode";
         mode_switch.valign = Gtk.Align.CENTER;
-        mode_switch.bind_property ("active", gtk_settings, "gtk_application_prefer_dark_theme");
-        Application.settings.bind("dark-mode", mode_switch, "active", SettingsBindFlags.DEFAULT);
+        mode_switch.bind_property ("active", gtk_settings,
+                         "gtk_application_prefer_dark_theme"); //bind to gtk settings
+        Application.settings.bind("dark-mode", mode_switch,
+                         "active", SettingsBindFlags.DEFAULT); //bind to gsettings
 
         //initialize the headerbar
         var headerbar = new Gtk.HeaderBar ();
@@ -156,10 +157,39 @@ public class Window : Gtk.ApplicationWindow {
         minuteslabel.get_style_context ().add_class ("h1");
         secondslabel.get_style_context ().add_class ("h1");
 
+        var indicator1 = new Gtk.Image();
+        indicator1.set_from_file("indicator.png");
+        var indicator2 = new Gtk.Image();
+        indicator2.set_from_file("data/indicator.png");
+        var indicator3 = new Gtk.Image();
+        indicator3.set_from_file("indicator.svg");
+        var indicator4 = new Gtk.Image();
+        indicator4.set_from_file("indicator.svg");
+
+        var indicator_grid = new Gtk.Grid();
+        indicator_grid.column_homogeneous = true;
+        indicator_grid.hexpand = true;
+
+        indicator_grid.attach(indicator1, 0, 0, 1, 1); //col, row
+        indicator_grid.attach(indicator2, 1, 0, 1, 1);
+        indicator_grid.attach(indicator3, 2, 0, 1, 1);
+        indicator_grid.attach(indicator4, 3, 0, 1, 1);
+        //add(indicator_grid);
+        indicator1.show();
+        indicator2.show();
+        indicator3.show();
+        indicator4.show();
+
         var pomogrid = new Gtk.Grid ();
         pomogrid.attach(minuteslabel, 0, 0, 1, 1); //col, row, colW, rowW
         pomogrid.attach(secondslabel, 1, 0, 1, 1);
-        add(pomogrid); //commit the grid that was constructed
+        //add(pomogrid); //commit the grid that was constructed
+
+        var window_grid = new Gtk.Grid();
+        window_grid.attach(pomogrid, 0, 0);
+        window_grid.attach(indicator_grid, 0, 1);
+        window_grid.show_all();
+        add(window_grid);   
 
         /*          BUTTON EVENTS                   */
         /* connect to miscbutton's "clicked" signal */
@@ -195,7 +225,7 @@ public class Window : Gtk.ApplicationWindow {
 
     public bool timeLeft() {
         timeelapsed = Math.ceil(timelim - timer.elapsed());
-        stdout.printf("p-te: %f", timeelapsed);
+        //stdout.printf("p-te: %f", timeelapsed);
         if(timeelapsed < 0) { //< lets the timer hit 0
             return false; } //call alarm
         updateTimer(timeelapsed);
@@ -214,8 +244,8 @@ public class Window : Gtk.ApplicationWindow {
     }
 
     public void updateTimerLabel(int m, int s) {
-        string tm = "%02d:".printf(m);
-        string ts = "%02d".printf(s);
+        string tm = "%02d:".printf(m); //mod strings to make
+        string ts = "%02d".printf(s); // time format look nicer
         minuteslabel.set_text(tm);
         secondslabel.set_text(ts);
     }
