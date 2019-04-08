@@ -4,7 +4,7 @@ public class Window : Gtk.ApplicationWindow {
     //public static GLib.Settings settings;
     private const string LIGHT_MODE = "display-brightness-symbolic";
     private const string DARK_MODE = "weather-clear-night-symbolic";
-    bool darkmode;
+    //bool darkmode;
     double timeelapsed;
     double timelim = 10; //minutes
 
@@ -23,7 +23,7 @@ public class Window : Gtk.ApplicationWindow {
     private GLib.Timer timer;
 
     construct {
-        darkmode = Application.settings.get_boolean ("dark-mode");
+        //darkmode = Application.settings.get_boolean ("dark-mode");
         border_width = 10;
         //connect before_destroy() to window terminator
         delete_event.connect(e => {
@@ -174,22 +174,16 @@ public class Window : Gtk.ApplicationWindow {
         indicator_grid.attach(indicator2, 1, 0, 1, 1);
         indicator_grid.attach(indicator3, 2, 0, 1, 1);
         indicator_grid.attach(indicator4, 3, 0, 1, 1);
-        //add(indicator_grid);
-        indicator1.show();
-        indicator2.show();
-        indicator3.show();
-        indicator4.show();
 
         var pomogrid = new Gtk.Grid ();
         pomogrid.attach(minuteslabel, 0, 0, 1, 1); //col, row, colW, rowW
         pomogrid.attach(secondslabel, 1, 0, 1, 1);
-        //add(pomogrid); //commit the grid that was constructed
 
         var window_grid = new Gtk.Grid();
         window_grid.attach(pomogrid, 0, 0);
         window_grid.attach(indicator_grid, 0, 1);
         window_grid.show_all();
-        add(window_grid);   
+        add(window_grid); //commit the grid of grids that was constructed
 
         /*          BUTTON EVENTS                   */
         /* connect to miscbutton's "clicked" signal */
@@ -198,7 +192,7 @@ public class Window : Gtk.ApplicationWindow {
             timer = new GLib.Timer();
             timer.start();
             //this will run timeLeft every 1s until !timeLeft
-            GLib.Timeout.add_seconds(1, timeLeft);//its more clear passing the function
+            GLib.Timeout.add_seconds(1, timeLeft);//its more clear passing my own function
 			miscbutton.label = "Stop Timer";
 		});
         /*connect menu buton
