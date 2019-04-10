@@ -199,17 +199,8 @@ public class Window : Gtk.ApplicationWindow {
         /* connect to miscbutton's "clicked" signal */
         miscbutton.clicked.connect (() => {
 			// Emitted when the button has been activated:
-            //timer = new GLib.Timer();
-            //timer.start();
             startTimer();
-            //this will run timeLeft every 1s until !timeLeft
-            //GLib.Timeout.add_seconds(1, timeLeft);//its more clear passing my own function
-			//miscbutton.label = "Stop Timer";
 		});
-        /*connect menu buton
-        menu_button.clicked.connect (() => { // Emitted when button clicked:
-            //miscbutton.label = "Settings requested";
-		});*/
 
         int posx = Application.settings.get_int ("position-x");
         int posy = Application.settings.get_int ("position-y");
@@ -232,7 +223,7 @@ public class Window : Gtk.ApplicationWindow {
             miscbutton.get_style_context().add_class("destructive-action");
             timer.start();
             GLib.Timeout.add_seconds(1, timeLeft); //its more clear passing my own function
-            
+            //this will run timeLeft every 1s until !timeLeft
             break;
         case Mode.RUNNING:
             mode = Mode.PAUSED;
@@ -240,7 +231,6 @@ public class Window : Gtk.ApplicationWindow {
             updateTimer(timeelapsed);
             miscbutton.label = "Resume Timer";
             miscbutton.get_style_context().remove_class("destructive-action");
-            //timer.start();
             break;
         case Mode.PAUSED:
             if(timeLeft()) {
@@ -255,7 +245,7 @@ public class Window : Gtk.ApplicationWindow {
             mode = Mode.STOPPED;
             break;
         case Mode.BREAK:
-            break;
+            break; //probably need an error case for the timer not existing
         default:
             break;
         }
@@ -264,8 +254,9 @@ public class Window : Gtk.ApplicationWindow {
 
     public bool timeLeft() {
         timeelapsed = Math.ceil(timelim - timer.elapsed());
-        //stdout.printf("p-te: %f", timeelapsed);
+        //db: stdout.printf("p-te: %f", timeelapsed);
         if(timeelapsed < 0) { //< lets the timer hit 0
+            mode = Mode.STOPPED;
             return false; } //call alarm
         updateTimer(timeelapsed);
         return true;
@@ -298,12 +289,9 @@ public class Window : Gtk.ApplicationWindow {
 
     // This function returns false by default, and has no default actions
     // Here, we hi-jack the function to add saving the window dimen/location to gsettings
-    // so they can be re-loaded when the application is launched again.
-    // Only after getting the current info and saving that info to gschema.xml does
-    // the function return false and close the program as requested
+    // when the function return false and closes the program as requested
     public bool before_destroy () {
         int width, height, x, y;
-        //if(Pomo.Window.mode_switch(darkmode))
         get_size(out width, out height);
         get_position(out x, out y);
         Pomodoro.Application.settings.set_int("position-x", x);
