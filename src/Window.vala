@@ -5,8 +5,17 @@ public class Window : Gtk.ApplicationWindow {
     private const string LIGHT_MODE = "display-brightness-symbolic";
     private const string DARK_MODE = "weather-clear-night-symbolic";
     //bool darkmode;
-    double timeelapsed;
-    double timelim = 10; //minutes
+    public static double timeelapsed;
+    public static double timelim = 10; //minutes
+
+    public enum Mode {
+        RUNNING,
+        STOPPED,
+        PAUSED,
+        BREAK
+    }
+
+    public Mode mode { get; private set; default = Mode.STOPPED; }
 
     public Window(Application app) {
         // TODO: Look into requesting position to stop window from jumping on open
@@ -18,9 +27,10 @@ public class Window : Gtk.ApplicationWindow {
         // size to be smaller in the future, this is a good note to have
     }
 
-    Gtk.Label minuteslabel; //we declare these globally Pomodoro namespace
-    Gtk.Label secondslabel; //so that we can access them in member functions
-    private GLib.Timer timer;
+    static Gtk.Label minuteslabel; //we declare these globally Pomodoro namespace
+    static Gtk.Label secondslabel; //so that we can access them in member functions
+    Gtk.Button miscbutton;
+    private GLib.Timer timer = new GLib.Timer();
 
     construct {
         //darkmode = Application.settings.get_boolean ("dark-mode");
@@ -33,10 +43,10 @@ public class Window : Gtk.ApplicationWindow {
 
         /*  Start Headerbar */
         /*                  */
-        var miscbutton = new Gtk.Button.with_label("Start Timer");
+        miscbutton = new Gtk.Button.with_label("Start Timer");
         miscbutton.get_style_context().add_class("suggested-action");
         miscbutton.valign = Gtk.Align.CENTER; //center in HB
-        
+
         /* Settings Menu       */
         /* add settings cog... */
         var menu_button = new Gtk.MenuButton(); //autoconnects a menu
@@ -189,11 +199,12 @@ public class Window : Gtk.ApplicationWindow {
         /* connect to miscbutton's "clicked" signal */
         miscbutton.clicked.connect (() => {
 			// Emitted when the button has been activated:
-            timer = new GLib.Timer();
-            timer.start();
+            //timer = new GLib.Timer();
+            //timer.start();
+            startTimer();
             //this will run timeLeft every 1s until !timeLeft
-            GLib.Timeout.add_seconds(1, timeLeft);//its more clear passing my own function
-			miscbutton.label = "Stop Timer";
+            //GLib.Timeout.add_seconds(1, timeLeft);//its more clear passing my own function
+			//miscbutton.label = "Stop Timer";
 		});
         /*connect menu buton
         menu_button.clicked.connect (() => { // Emitted when button clicked:
@@ -205,17 +216,51 @@ public class Window : Gtk.ApplicationWindow {
         int winx = Application.settings.get_int ("window-width");
         int winy = Application.settings.get_int ("window-height");
 
-        if (posx != -1 ||  posy != -1) {
+        if (posx != -1 ||  posy != -1)
             this.move(posx, posy);
-        }
-        if (winx != -1 || winy != -1) {
+        if (winx != -1 || winy != -1)
             this.resize (winx, winy);
-        }
         //Recursively shows widgets, and any child widgets (if widget is container) 
         show_all();
     } //construct
 
-    public void startTimer() {}
+    public void startTimer() {
+        switch(mode) {
+        case Mode.STOPPED:
+            mode = Mode.RUNNING;
+            miscbutton.label = "Stop Timer";
+            miscbutton.get_style_context().add_class("destructive-action");
+            timer.start();
+            GLib.Timeout.add_seconds(1, timeLeft); //its more clear passing my own function
+            
+            break;
+        case Mode.RUNNING:
+            mode = Mode.PAUSED;
+            timer.stop();
+            updateTimer(timeelapsed);
+            miscbutton.label = "Resume Timer";
+            miscbutton.get_style_context().remove_class("destructive-action");
+            //timer.start();
+            break;
+        case Mode.PAUSED:
+            if(timeLeft()) {
+                mode = Mode.RUNNING;
+                timelim -= timer.elapsed();
+                miscbutton.label = "Stop Timer";
+                miscbutton.get_style_context().add_class("destructive-action");
+                timer.start();
+                GLib.Timeout.add_seconds(1, timeLeft);
+                break;
+            }
+            mode = Mode.STOPPED;
+            break;
+        case Mode.BREAK:
+            break;
+        default:
+            break;
+        }
+        //timer.start();
+    }
 
     public bool timeLeft() {
         timeelapsed = Math.ceil(timelim - timer.elapsed());
@@ -227,21 +272,21 @@ public class Window : Gtk.ApplicationWindow {
     }
 
     public void updateTimer(double timeelapsed) {
-            double t = Math.ceil(timeelapsed);
-            //db: stdout.printf("tlim: %d, te %d, t:%d\n", (int)timelim, (int)timeelapsed, (int)t);
-            int m;
-            int s;
-            double r;
-            time_to_ms(t, out m, out s, out r);
-            //db: stdout.printf("time-ms: %d\n", (int)t);
-            updateTimerLabel(m, s);
+        double t = Math.ceil(timeelapsed);
+        //db: stdout.printf("tlim: %d, te %d, t:%d\n", (int)timelim, (int)timeelapsed, (int)t);
+        int m;
+        int s;
+        double r;
+        time_to_ms(t, out m, out s, out r);
+        //db: stdout.printf("time-ms: %d\n", (int)t);
+        updateTimerLabel(m, s);
     }
 
     public void updateTimerLabel(int m, int s) {
         string tm = "%02d:".printf(m); //mod strings to make
         string ts = "%02d".printf(s); // time format look nicer
-        minuteslabel.set_text(tm);
-        secondslabel.set_text(ts);
+        minuteslabel.set_label(tm);
+        secondslabel.set_label(ts);
     }
     //Derives time in 60's, modfied from gnome clocks
     public void time_to_ms (double t, out int m, out int s, out double remainder) {

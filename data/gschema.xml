@@ -6,7 +6,6 @@
             <summary>Horizontal Position</summary>
             <description>The saved horizontal position of the window</description>
         </key>
-
         <key name="position-y" type="i">
             <default>360</default>
             <summary>Vertical Position</summary>
@@ -28,6 +27,16 @@
             <default>false</default>
             <summary>Darkmode enabled?</summary>
             <description>Saved boolean value store the darkmode switch state.</description>
+        </key>
+        <key name="pomodoro-length" type="i">
+            <default>25</default>
+            <summary>Length of Pomodoro Intervals</summary>
+            <description>Integer value defining how long a Pomodoro is.</description>
+        </key>
+        <key name="break-length" type="i">
+            <default>3</default>
+            <summary>Defines how long breaks are.</summary>
+            <description>Integer value defining how long breaks are.</description>
         </key>
     </schema>
 </schemalist>
