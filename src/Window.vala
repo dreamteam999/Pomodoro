@@ -22,9 +22,8 @@ public class Window : Gtk.ApplicationWindow {
         Object (application: app, //app instance
                 height_request: 600,
                 width_request: 800); //eliminate need to set size every start
-        // TC: Has other side effects, such as making the above dimens the min size.
-        // I don't consider this a bad thing, but in case we want the default 
-        // size to be smaller in the future, this is a good note to have
+        // TC: Has side effects, such as making the above dimens the min size.
+        // I don't consider this bad, in case we want a default window size
     }
 
     static Gtk.Label minuteslabel; //we declare these globally Pomodoro namespace
@@ -33,16 +32,13 @@ public class Window : Gtk.ApplicationWindow {
     private GLib.Timer timer = new GLib.Timer();
 
     construct {
-        //darkmode = Application.settings.get_boolean ("dark-mode");
         border_width = 10;
-        //connect before_destroy() to window terminator
-        delete_event.connect(e => {
+        delete_event.connect(e => { //connect before_destroy() to window terminator
             //return false;
             return before_destroy();
         });
 
         /*  Start Headerbar */
-        /*                  */
         miscbutton = new Gtk.Button.with_label("Start Timer");
         miscbutton.get_style_context().add_class("suggested-action");
         miscbutton.valign = Gtk.Align.CENTER; //center in HB
@@ -52,7 +48,6 @@ public class Window : Gtk.ApplicationWindow {
         var menu_button = new Gtk.MenuButton(); //autoconnects a menu
         menu_button.image = new Gtk.Image.from_icon_name ("open-menu", Gtk.IconSize.LARGE_TOOLBAR);
         menu_button.tooltip_text = "Menu";
-
         // ...and it's menu
         var menu_popover = new Gtk.Popover (menu_button);
         menu_button.popover = menu_popover;
@@ -201,6 +196,26 @@ public class Window : Gtk.ApplicationWindow {
 			// Emitted when the button has been activated:
             startTimer();
 		});
+        /* Pomodoro Lengths */
+        tf_button.clicked.connect(() => {
+            Application.settings.set_int("pomodoro-length", 1500); //25min - sec
+        });
+        to_button.clicked.connect(() => {
+            Application.settings.set_int("pomodoro-length", 1800); //30min - sec
+        });
+        ff_button.clicked.connect(() => {
+            Application.settings.set_int("pomodoro-length", 2700); //45min - sec
+        });
+        /* Break Lengths */
+        tfb_button.clicked.connect(() => {
+            Application.settings.set_int("break-length", 2700); //45min - sec
+        });
+        ftb_button.clicked.connect(() => {
+            Application.settings.set_int("break-length", 2700); //45min - sec
+        });
+        ttb_button.clicked.connect(() => {
+            Application.settings.set_int("break-length", 2700); //45min - sec
+        });
 
         int posx = Application.settings.get_int ("position-x");
         int posy = Application.settings.get_int ("position-y");
@@ -249,7 +264,8 @@ public class Window : Gtk.ApplicationWindow {
         default:
             break;
         }
-        //timer.start();
+        //TODO: if pomcount >=4 Mode.STOPPED else Mode.BREAK;
+        //TODO: set timelim to appropriate value
     }
 
     public bool timeLeft() {
@@ -257,6 +273,9 @@ public class Window : Gtk.ApplicationWindow {
         //db: stdout.printf("p-te: %f", timeelapsed);
         if(timeelapsed < 0) { //< lets the timer hit 0
             mode = Mode.STOPPED;
+            miscbutton.label = "Break Time";
+            miscbutton.get_style_context().remove_class("destructive-action");
+            timelim = Application.settings.get_int("pomodoro-length");
             return false; } //call alarm
         updateTimer(timeelapsed);
         return true;
