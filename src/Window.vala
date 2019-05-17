@@ -28,7 +28,7 @@ public class Window : Gtk.ApplicationWindow {
 
     static Gtk.Label minuteslabel; //we declare these globally Pomodoro namespace
     static Gtk.Label secondslabel; //so that we can access them in member functions
-    Gtk.Button miscbutton;
+    Gtk.Button timerbutton;
     private GLib.Timer timer = new GLib.Timer();
 
     construct {
@@ -39,9 +39,9 @@ public class Window : Gtk.ApplicationWindow {
         });
 
         /*  Start Headerbar */
-        miscbutton = new Gtk.Button.with_label("Start Timer");
-        miscbutton.get_style_context().add_class("suggested-action");
-        miscbutton.valign = Gtk.Align.CENTER; //center in HB
+        timerbutton = new Gtk.Button.with_label("Start Timer");
+        timerbutton.get_style_context().add_class("suggested-action");
+        timerbutton.valign = Gtk.Align.CENTER; //center in HB
 
         /* Settings Menu       */
         /* add settings cog... */
@@ -156,7 +156,7 @@ public class Window : Gtk.ApplicationWindow {
         headerbar.set_title("DreamTeam Pomodoro");
         headerbar.set_subtitle("What will you accomplish today?");
         headerbar.show_close_button = true;
-        headerbar.pack_start(miscbutton); //push to  left of HB
+        headerbar.pack_start(timerbutton); //push to  left of HB
         headerbar.pack_end (menu_button); //push to right of HB
         headerbar.pack_end (mode_switch);
         set_titlebar (headerbar); //activate the headerbar
@@ -196,8 +196,8 @@ public class Window : Gtk.ApplicationWindow {
         add(window_grid); //commit the grid of grids that was constructed
 
         /*          BUTTON EVENTS                   */
-        /* connect to miscbutton's "clicked" signal */
-        miscbutton.clicked.connect (() => {
+        /* connect to timerbutton's "clicked" signal */
+        timerbutton.clicked.connect (() => {
 			// Emitted when the button has been activated:
             startTimer();
 		});
@@ -239,8 +239,8 @@ public class Window : Gtk.ApplicationWindow {
         switch(mode) {
         case Mode.STOPPED:
             mode = Mode.RUNNING;
-            miscbutton.label = "Stop Timer";
-            miscbutton.get_style_context().add_class("destructive-action");
+            timerbutton.label = "Stop Timer";
+            timerbutton.get_style_context().add_class("destructive-action");
             timer.start();
             GLib.Timeout.add_seconds(1, timeLeft); //its more clear passing my own function
             //this will run timeLeft every 1s until !timeLeft
@@ -249,15 +249,15 @@ public class Window : Gtk.ApplicationWindow {
             mode = Mode.PAUSED;
             timer.stop();
             updateTimer(timeelapsed);
-            miscbutton.label = "Resume Timer";
-            miscbutton.get_style_context().remove_class("destructive-action");
+            timerbutton.label = "Resume Timer";
+            timerbutton.get_style_context().remove_class("destructive-action");
             break;
         case Mode.PAUSED:
             if(timeLeft()) {
                 mode = Mode.RUNNING;
                 timelim -= timer.elapsed();
-                miscbutton.label = "Stop Timer";
-                miscbutton.get_style_context().add_class("destructive-action");
+                timerbutton.label = "Stop Timer";
+                timerbutton.get_style_context().add_class("destructive-action");
                 timer.start();
                 GLib.Timeout.add_seconds(1, timeLeft);
                 break;
@@ -278,8 +278,8 @@ public class Window : Gtk.ApplicationWindow {
         //db: stdout.printf("p-te: %f", timeelapsed);
         if(timeelapsed < 0) { //< lets the timer hit 0
             mode = Mode.STOPPED;
-            miscbutton.label = "Break Time";
-            miscbutton.get_style_context().remove_class("destructive-action");
+            timerbutton.label = "Break Time";
+            timerbutton.get_style_context().remove_class("destructive-action");
             timelim = Application.settings.get_int("pomodoro-length");
             return false; } //call alarm
         updateTimer(timeelapsed);
