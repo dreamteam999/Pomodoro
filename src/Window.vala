@@ -52,6 +52,8 @@ public class Window : Gtk.ApplicationWindow {
         var menu_popover = new Gtk.Popover (menu_button);
         menu_button.popover = menu_popover;
 
+        //pomodoro length buttons
+        var pom_label = new Gtk.Label("Pomodoro Lengths");
         var tf_button = new Gtk.Button.with_label ("25");
         tf_button.tooltip_markup = Granite.markup_accel_tooltip (
             {"<Ctrl>2"},
@@ -70,10 +72,12 @@ public class Window : Gtk.ApplicationWindow {
         pomodoro_grid.hexpand = true;
         pomodoro_grid.margin = 12;
 
-        pomodoro_grid.add (tf_button);
-        pomodoro_grid.add (to_button);
-        pomodoro_grid.add (ff_button);
+        pomodoro_grid.attach (pom_label, 0, 0, 3);
+        pomodoro_grid.attach (tf_button, 0, 1); // new rows are created automatically
+        pomodoro_grid.attach (to_button, 1, 1);
+        pomodoro_grid.attach (ff_button, 2, 1);
         // break length buttons
+        var break_label = new Gtk.Label("Break Lengths");
         var tfb_button = new Gtk.Button.with_label ("3/15");
         tfb_button.tooltip_markup = Granite.markup_accel_tooltip (
             {"<Ctrl><Shift>2"},
@@ -92,9 +96,10 @@ public class Window : Gtk.ApplicationWindow {
         break_grid.hexpand = true;
         break_grid.margin = 12;
 
-        break_grid.add(tfb_button);
-        break_grid.add(ftb_button);
-        break_grid.add(ttb_button);
+        break_grid.attach(break_label, 0, 0, 3);
+        break_grid.attach(tfb_button, 0, 1);
+        break_grid.attach(ftb_button, 1, 1);
+        break_grid.attach(ttb_button, 2, 1);
 
         var reset_label = new Gtk.Label ("Reset Pomodoros");
         reset_label.halign = Gtk.Align.START;
